@@ -8,6 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 require('./server/config/mongoose.config');
-require('./server/routes/{filename}.routes')(app);
+require('./server/routes/shoe.routes')(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
