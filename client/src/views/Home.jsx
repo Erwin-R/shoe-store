@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from '../components/NavBar';
 import TrendingProduct from "../components/TrendingProducts";
+import Footer from '../components/Footer';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade } from 'swiper';
@@ -52,6 +53,7 @@ const Home = () => {
             </div>
 
             <TrendingProduct />
+            <Footer />
         </div>
     );
 }
