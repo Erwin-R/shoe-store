@@ -26,20 +26,27 @@ const ShoppingCart = (props) => {
   const products = useContext(ShoeContext);
 
   useEffect(() => {
+    updateCartTotal();
+  }, [])
+
+  const updateCartTotal = () => {
     let sum = 0;
-    let taxEstimate = 0;
-    let tempTotal = 0;
     for(let item in products){
-      sum += parseInt(products[item].price)
+      sum += parseInt(products[item].price) * products[item].amount;
     }
     setSubtotal(sum.toFixed(2));
 
-    taxEstimate = sum * 0.05;
+    const taxEstimate = sum * 0.05;
     setTaxes(taxEstimate.toFixed(2));
 
-    tempTotal = sum + taxEstimate + 5
+    const tempTotal = sum + taxEstimate + 5
     setTotal(tempTotal.toFixed(2));
-  }, [])
+  }
+
+  const onChangeCartSelect = (e, idx) => {
+    products[idx].amount = e.target.value;
+    updateCartTotal();
+  }
 
   return (
     <div className="bg-white">
@@ -89,6 +96,7 @@ const ShoppingCart = (props) => {
                           id={`quantity-${productIdx}`}
                           name={`quantity-${productIdx}`}
                           className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                          onChange={(e) => onChangeCartSelect(e, productIdx)}
                         >
                           <option value={1}>1</option>
                           <option value={2}>2</option>
