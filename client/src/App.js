@@ -7,6 +7,8 @@ import SideBar from './components/SideBar';
 import TrendingProduct from './components/TrendingProducts';
 import ShoppingCartPage from './views/ShoppingCartPage';
 import ShoeContext from './context/ShoeContext';
+import ViewAllShoes from './views/ViewAllShoes';
+
 
 function App() {
   const itemsInCart = [
@@ -59,6 +61,7 @@ function App() {
           <Route element={ <SideBar />} path="/sidebar" />
           <Route element={ <ShoppingCartPage />} path="/cart" />
           <Route element={ <OrderSummary />} path="/summary" />
+          <Route element={<ViewAllShoes/>} path="/shoe/view-all"/>
         </Routes>
       </ShoeContext.Provider>
     </div>
