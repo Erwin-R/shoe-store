@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -28,7 +28,14 @@ const products = [
 ]
 
 const SlidingCart = (props) => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(props.loaded)
+
+  const openCart = props.openCart;
+
+  useEffect(() => {
+    setOpen(props.loaded)
+  }, [props])
+
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -66,7 +73,10 @@ const SlidingCart = (props) => {
                           <button
                             type="button"
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                            onClick={() => setOpen(false)}
+                            onClick={() => {
+                                setOpen(!open)
+                                openCart(false)
+                            }}
                           >
                             <span className="sr-only">Close panel</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -103,7 +113,7 @@ const SlidingCart = (props) => {
                                     <div className="flex">
                                       <button
                                         type="button"
-                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        className="font-medium text-dark-blue hover:text-light-blue"
                                       >
                                         Remove
                                       </button>
@@ -126,18 +136,21 @@ const SlidingCart = (props) => {
                       <div className="mt-6">
                         <a
                           href="#"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                          className="flex items-center justify-center rounded-md border border-transparent bg-dark-blue px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-light-blue"
                         >
                           Checkout
                         </a>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          or
+                          
                           <button
                             type="button"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => setOpen(false)}
+                            className="font-medium text-dark-blue hover:text-light-blue"
+                            onClick={() => {
+                                setOpen(!open)
+                                openCart(false)
+                            }}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>
