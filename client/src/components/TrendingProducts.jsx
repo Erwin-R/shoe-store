@@ -8,7 +8,6 @@ const products = [
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
     imageAlt: 'Hand stitched, orange leather long wallet.',
   },
-  // More products...
 ]
 
 const TrendingProduct = (props) => {
@@ -16,11 +15,11 @@ const TrendingProduct = (props) => {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="md:flex md:items-center md:justify-between">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Trending products</h2>
-          <a href="#" className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Featured Products</h2>
+          {/* <a href="#" className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
             Shop the collection
             <span aria-hidden="true"> &rarr;</span>
-          </a>
+          </a> */}
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
