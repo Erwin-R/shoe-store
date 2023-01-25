@@ -6,6 +6,7 @@ import ProductPage from './components/ProductPage';
 import ShoppingCart from './components/ShoppingCart';
 import SideBar from './components/SideBar';
 import TrendingProduct from './components/TrendingProducts';
+import ViewAllShoes from './views/ViewAllShoes';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route element={ <SideBar />} path="/sidebar" />
         <Route element={ <ShoppingCart />} path="/cart" />
         <Route element={ <OrderSummary />} path="/summary" />
+        <Route element={<ViewAllShoes/>} path="/shoe/view-all"/>
       </Routes>
     </div>
   );
