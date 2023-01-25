@@ -8,6 +8,8 @@ import TrendingProduct from './components/TrendingProducts';
 import ShoppingCartPage from './views/ShoppingCartPage';
 import ShoeContext from './context/ShoeContext';
 import ViewAllShoes from './views/ViewAllShoes';
+import Home from './views/Home';
+import SlidingCart from './components/SlidingCart';
 
 
 function App() {
@@ -55,14 +57,15 @@ function App() {
     <div className="App">
       <ShoeContext.Provider value={itemsInCart}>
         <Routes>
-          <Route element={ <NavBar /> } path="/" />
+          <Route element={ <Home /> } path="/" />
           <Route element={ <ProductPage /> } path="/product" />
           <Route element={ <TrendingProduct />} path="/trending" />
           <Route element={ <ProductList />} path="/products" />
           <Route element={ <SideBar />} path="/sidebar" />
           <Route element={ <ShoppingCartPage />} path="/cart" />
           <Route element={ <OrderSummary />} path="/summary" />
-          <Route element={<ViewAllShoes/>} path="/shoe/view-all"/>
+          <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
+          <Route element={ <SlidingCart/> } path="/slide"/>
         </Routes>
       </ShoeContext.Provider>
     </div>
