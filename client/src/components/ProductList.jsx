@@ -12,6 +12,10 @@
   }
   ```
 */
+
+//https://tailwindui.com/img/ecommerce-images/category-page-07-product-01.jpg
+//https://tailwindui.com/img/ecommerce-images/category-page-07-product-02.jpg
+// https://tailwindui.com/img/ecommerce-images/category-page-07-product-03.jpg
 import {Link} from 'react-router-dom';
 const products = [
   {
@@ -20,7 +24,7 @@ const products = [
     href: '#',
     price: '$50',
     availability: 'White and Black',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-07-product-01.jpg',
+    imageSrc: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c3244ac405d4f1f833daed20188669f_9366/Puremotion_Running_Shoes_Black_GY2279_01_standard.jpg',
     imageAlt: 'White fabric pouch with white zipper, black zipper pull, and black elastic loop.',
   },
   {
@@ -29,7 +33,7 @@ const products = [
     href: '#',
     price: '$140',
     availability: 'Washed Black',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-07-product-02.jpg',
+    imageSrc: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c3244ac405d4f1f833daed20188669f_9366/Puremotion_Running_Shoes_Black_GY2279_01_standard.jpg',
     imageAlt: 'Front of tote bag with washed black canvas body, black straps, and tan leather handles and accents.',
   },
   {
@@ -38,7 +42,7 @@ const products = [
     href: '#',
     price: '$220',
     availability: 'Blue',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-07-product-03.jpg',
+    imageSrc: 'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c3244ac405d4f1f833daed20188669f_9366/Puremotion_Running_Shoes_Black_GY2279_01_standard.jpg',
     imageAlt:
       'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
   },
