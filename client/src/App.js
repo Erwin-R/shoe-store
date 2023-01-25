@@ -48,11 +48,9 @@ function App() {
     },
   ]
 
-  const message = "hello"
-
   return (
     <div className="App">
-      <ShoeContext.Provider value={{itemsInCart, message}}>
+      <ShoeContext.Provider value={itemsInCart}>
         <Routes>
           <Route element={ <NavBar /> } path="/" />
           <Route element={ <ProductPage /> } path="/product" />
