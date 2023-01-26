@@ -24,10 +24,11 @@ const ShoppingCart = (props) => {
   const [subtotal, setSubtotal] = useState(0);
   const [taxes, setTaxes] = useState(0);
   const [total, setTotal] = useState(0);
-  const products = useContext(ShoeContext);
+  const products = useContext(ShoeContext).itemsInCart;
 
   useEffect(() => {
     updateCartTotal();
+    console.log(products);
   }, [])
 
   const updateCartTotal = () => {
