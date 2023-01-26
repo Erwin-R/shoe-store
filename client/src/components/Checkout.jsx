@@ -12,6 +12,13 @@
   }
   ```
 */
+import React, { useEffect, useState } from "react";
+import { 
+  PaymentElement, 
+  LinkAuthenticationElement, 
+  useStripe, 
+  useElements 
+} from "@stripe/react-stripe-js";
 const products = [
   {
     id: 1,
@@ -27,6 +34,67 @@ const products = [
 ]
 
 const Checkout = (props) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const paymentElementOptions = { layout: 'tabs'};
+
+  useEffect(() => {
+    if(!stripe) return;
+
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret"
+    );
+
+    if(!clientSecret) return;
+
+    stripe.retrievePaymentIntent(clientSecret)
+      .then(({paymentIntent}) => {
+        switch (paymentIntent.status){
+          case "succeeded" :
+            setMessage("Payment succeeded!");
+            break;
+          case "processing" :
+            setMessage("Payment processing!");
+            break;
+          case "requires_payment_method" :
+            setMessage("Your payment was not successful, please try again.");
+            break;
+          default:
+              setMessage("Something went wrong.");
+              break;
+        }
+      });
+  }, [stripe])
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    if(!stripe || !elements){
+      return;
+    }
+
+    setIsLoading(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements, 
+      confirmParams: {
+        return_url: "http://localhost:3000/summary"
+      }
+    });
+    
+    if (error.type === "card_error" || error.type === "validation_error") {
+      setMessage(error.message);
+    } else {
+      setMessage("An unexpected error occured.");
+    }
+
+    setIsLoading(false);
+  };
+
   return (
     <div className="bg-white">
       {/* Background color split screen for large screens */}
@@ -108,10 +176,11 @@ const Checkout = (props) => {
                 </h3>
 
                 <div className="mt-6">
-                  <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
+                  <PaymentElement id="payment-element" options={paymentElementOptions}/>
+                  {/* <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                     Email address
-                  </label>
-                  <div className="mt-1">
+                  </label> */}
+                  {/* <div className="mt-1">
                     <input
                       type="email"
                       id="email-address"
@@ -119,11 +188,11 @@ const Checkout = (props) => {
                       autoComplete="email"
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              <div className="mt-10">
+              {/* <div className="mt-10">
                 <h3 className="text-lg font-medium text-gray-900">Payment details</h3>
 
                 <div className="mt-6 grid grid-cols-3 gap-y-6 gap-x-4 sm:grid-cols-4">
@@ -172,7 +241,7 @@ const Checkout = (props) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-10">
                 <h3 className="text-lg font-medium text-gray-900">Shipping address</h3>
@@ -261,11 +330,16 @@ const Checkout = (props) => {
 
               <div className="mt-10 flex justify-end border-t border-gray-200 pt-6">
                 <button
+                  id="submit"
                   type="submit"
                   className="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                  disabled={isLoading || !stripe || !elements}
                 >
-                  Pay now
+                  <span id="button-text">
+                    {isLoading ? <div className=" spinner" id=" spinner"></div> : "Pay now"}
+                  </span>
                 </button>
+                {message && <div id="payment-message">{message}</div>}
               </div>
             </div>
           </form>

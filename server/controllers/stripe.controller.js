@@ -1,3 +1,7 @@
+const StripeController = require('../controllers/stripe.controller');
+require('dotenv').config();
+const stripe = require("stripe")(process.env.SECRET_KEY);
+
 const calculateOrderAmount = (items) => {
     // Replace this constant with a calculation of the order's amount
     // Calculate the order total on the server to prevent
@@ -7,7 +11,7 @@ const calculateOrderAmount = (items) => {
 
 
 
-module.exports.createPaymentIntent = async (request, response) => {
+module.exports.createPaymentIntent = async (req, res) => {
     const { items } = req.body;
 
     // Create a PaymentIntent with the order amount and currency
