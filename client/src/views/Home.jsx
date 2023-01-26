@@ -10,29 +10,29 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-import home1 from '../images/carousel/home1.jpg';
-import home2 from '../images/carousel/home2.jpg';
-import home3 from '../images/carousel/home3.jpg';
-import home4 from '../images/carousel/home4.jpg';
-import home5 from '../images/carousel/home5.jpg';
-import home6 from '../images/carousel/home6.jpg';
+import wide1 from '../images/carousel/wide1.jpg';
+import wide2 from '../images/carousel/wide2.jpg';
+import wide3 from '../images/carousel/wide3.jpg';
+import wide4 from '../images/carousel/wide4.jpg';
+import wide5 from '../images/carousel/wide5.jpg';
+import wide6 from '../images/carousel/wide6.jpg';
 
 const Home = () => {
 
     const carousel = [
-        { img: home1, alt: '' },
-        { img: home2, alt: '' },
-        { img: home3, alt: '' },
-        { img: home4, alt: '' },
-        { img: home5, alt: '' },
-        { img: home6, alt: '' },
+        { img: wide1, alt: '' },
+        { img: wide2, alt: '' },
+        { img: wide3, alt: '' },
+        { img: wide4, alt: '' },
+        { img: wide5, alt: '' },
+        { img: wide6, alt: '' },
     ];
 
     return (
         <div>
             <NavBar/>
 
-            <div className="lg:w-2/3 w-full mx-auto">
+            <div className="w-full mx-auto relative">
                 <Swiper
                 effect="fade"
                 className="max-h-min"
@@ -45,11 +45,12 @@ const Home = () => {
                         return (
                             <SwiperSlide key={i}
                             >
-                                <img src={images.img} alt={images.alt} />
+                                <img src={images.img} alt={images.alt}/>
                             </SwiperSlide>
                         )
                     })}
                 </Swiper>
+                {/* <h1 className="z-1000 absolute text-6xl text-black mx-auto font-fugaz">ONE STEP AT A TIME</h1> */}
             </div>
 
             <TrendingProduct />

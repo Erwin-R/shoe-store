@@ -12,9 +12,10 @@
   }
   ```
 */
-import { Fragment, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useState } from 'react';
+import { Dialog, Popover, Tab, Transition } from '@headlessui/react';
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 import SlidingCart from './SlidingCart';
 
@@ -22,7 +23,7 @@ const navigation = {
   categories: [
     {
       id: 'women',
-      name: 'Women',
+      name: 'Shop All',
       featured: [
         {
           name: 'New Arrivals',
@@ -78,62 +79,62 @@ const navigation = {
         },
       ],
     },
-    {
-      id: 'men',
-      name: 'Men',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
-          ],
-        },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
-        {
-          id: 'brands',
-          name: 'Brands',
-          items: [
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-          ],
-        },
-      ],
-    },
+    // {
+    //   id: 'men',
+    //   name: 'Men',
+    //   featured: [
+    //     {
+    //       name: 'New Arrivals',
+    //       href: '#',
+    //       imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
+    //       imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
+    //     },
+    //     {
+    //       name: 'Artwork Tees',
+    //       href: '#',
+    //       imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
+    //       imageAlt:
+    //         'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
+    //     },
+    //   ],
+    //   sections: [
+    //     {
+    //       id: 'clothing',
+    //       name: 'Clothing',
+    //       items: [
+    //         { name: 'Tops', href: '#' },
+    //         { name: 'Pants', href: '#' },
+    //         { name: 'Sweaters', href: '#' },
+    //         { name: 'T-Shirts', href: '#' },
+    //         { name: 'Jackets', href: '#' },
+    //         { name: 'Activewear', href: '#' },
+    //         { name: 'Browse All', href: '#' },
+    //       ],
+    //     },
+    //     {
+    //       id: 'accessories',
+    //       name: 'Accessories',
+    //       items: [
+    //         { name: 'Watches', href: '#' },
+    //         { name: 'Wallets', href: '#' },
+    //         { name: 'Bags', href: '#' },
+    //         { name: 'Sunglasses', href: '#' },
+    //         { name: 'Hats', href: '#' },
+    //         { name: 'Belts', href: '#' },
+    //       ],
+    //     },
+    //     {
+    //       id: 'brands',
+    //       name: 'Brands',
+    //       items: [
+    //         { name: 'Re-Arranged', href: '#' },
+    //         { name: 'Counterfeit', href: '#' },
+    //         { name: 'Full Nelson', href: '#' },
+    //         { name: 'My Way', href: '#' },
+    //       ],
+    //     },
+    //   ],
+    // },
   ],
   pages: [
     { name: 'Company', href: '#' },
@@ -300,7 +301,7 @@ const NavBar = (props) => {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-light-blue px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        <p className="flex h-10 items-center justify-center bg-gradient-to-r from-green via-light-blue to-dark-blue px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           FREE STANDARD SHIPPING AND RETURNS
         </p>
 
@@ -340,8 +341,8 @@ const NavBar = (props) => {
                             <Popover.Button
                               className={classNames(
                                 open
-                                  ? 'border-red text-red'
-                                  : 'border-transparent text-gray-700 hover:text-red hover:border-red',
+                                  ? 'border-green text-green'
+                                  : 'border-transparent text-gray-700 hover:text-green hover:border-green',
                                 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
                               )}
                             >
@@ -417,7 +418,7 @@ const NavBar = (props) => {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
+                  {/* {navigation.pages.map((page) => (
                     <a
                       key={page.name}
                       href={page.href}
@@ -425,19 +426,19 @@ const NavBar = (props) => {
                     >
                       {page.name}
                     </a>
-                  ))}
+                  ))} */}
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 ">
+                  <Link to="#" className="text-sm font-medium hover:text-green">
                     Sign in
-                  </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  </Link>
+                  <span className="h-6 w-px bg-gray-200 " aria-hidden="true" />
+                  <Link to="#" className="text-sm font-medium hover:text-green ">
                     Create account
-                  </a>
+                  </Link>
                 </div>
 
                 {/* currency icon below */}
@@ -456,7 +457,7 @@ const NavBar = (props) => {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                  <a href="#" className="p-2 text-gray-500 hover:text-green">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
                   </a>
@@ -466,7 +467,7 @@ const NavBar = (props) => {
                 <div className="ml-4 flow-root lg:ml-6">
                   <div onClick={() => openCart(true) } className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
-                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="h-6 w-6 flex-shrink-0 text-gray-500 group-hover:text-green"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>

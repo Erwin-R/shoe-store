@@ -17,6 +17,7 @@
 // https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ShoeContext from '../context/ShoeContext';
 
 const ShoppingCart = (props) => {
@@ -95,10 +96,7 @@ const ShoppingCart = (props) => {
                         <select
                           id={`quantity-${productIdx}`}
                           name={`quantity-${productIdx}`}
-
-                          className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                           onChange={(e) => onChangeCartSelect(e, productIdx)}
-
                           className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-green focus:outline-none focus:ring-1 focus:ring-green sm:text-sm"
                         >
                           <option value={1}>1</option>
@@ -176,12 +174,12 @@ const ShoppingCart = (props) => {
             </dl>
 
             <div className="mt-6">
-              <button
-                type="submit"
-                className="w-full rounded-md border border-transparent bg-dark-blue py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50"
-              >
-                Checkout
-              </button>
+                <Link to='/checkout'>
+                <button
+                    type="submit"
+                    className="w-full rounded-md border border-transparent bg-dark-blue py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50"
+                >Checkout</button>
+                </Link>
             </div>
           </section>
         </form>
