@@ -11,10 +11,12 @@ import ViewAllShoes from './views/ViewAllShoes';
 import Home from './views/Home';
 import SlidingCart from './components/SlidingCart';
 import CheckoutPage from './views/CheckoutPage';
+import { useState } from 'react';
 
 
 function App() {
-  const itemsInCart = [
+  const [itemsInCart, setItemsInCart] = useState([]);
+  const testCart = [
     {
       id: 1,
       name: 'ULTRABOOST 1.0',
@@ -56,7 +58,7 @@ function App() {
 
   return (
     <div className="App">
-      <ShoeContext.Provider value={itemsInCart}>
+      <ShoeContext.Provider value={{itemsInCart, setItemsInCart}}>
         <Routes>
           <Route element={ <Home /> } path="/" />
           <Route element={ <ProductPage /> } path="/product" />
