@@ -10,6 +10,7 @@ import ShoeContext from './context/ShoeContext';
 import ViewAllShoes from './views/ViewAllShoes';
 import Home from './views/Home';
 import SlidingCart from './components/SlidingCart';
+import CheckoutPage from './views/CheckoutPage';
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
           <Route element={ <OrderSummary />} path="/summary" />
           <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
           <Route element={ <SlidingCart/> } path="/slide"/>
+          <Route element={ <CheckoutPage/> } path="/checkout"/>
         </Routes>
       </ShoeContext.Provider>
     </div>
