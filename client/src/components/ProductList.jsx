@@ -179,7 +179,7 @@ const ProductList = (props) => {
           ))} */}
           {props.allShoes.map((shoe, i) =>{
             return(
-            <Link key={i} to={"/"} className="group text-sm">
+            <Link key={i} to={"/product/" + shoe._id} className="group text-sm">
               <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                 <img
                   src={shoe.imgUrls[0]}
