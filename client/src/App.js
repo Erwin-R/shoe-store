@@ -11,21 +11,28 @@ import ViewAllShoes from './views/ViewAllShoes';
 import Home from './views/Home';
 import SlidingCart from './components/SlidingCart';
 import CheckoutPage from './views/CheckoutPage';
-
+import { useState, useEffect } from 'react';
 import AdminPage from './views/AdminPage';
-
 import { useState } from 'react';
 import ViewProduct from './views/ViewProduct';
 
 
 
 function App() {
-  // const [itemsInCart, setItemsInCart] = useState([]);
-  const [itemsInCart, setItemsInCart] = useState(JSON.parse(sessionStorage.getItem('itemsInCart')));
+  const [itemsInCart, setItemsInCart] = useState([]);
+  const [numInCart, setNumInCart] = useState(0);
+
+  useEffect(() => {
+    const updateNumInCart = JSON.parse(sessionStorage.getItem('numInCart'));
+    setNumInCart(updateNumInCart);
+
+    const updateItemsInCart = JSON.parse(sessionStorage.getItem('itemsInCart'));
+    setItemsInCart(updateItemsInCart);
+  }, [numInCart])
 
   return (
     <div className="App">
-      <ShoeContext.Provider value={{itemsInCart, setItemsInCart}}>
+      <ShoeContext.Provider value={{itemsInCart, setItemsInCart, numInCart, setNumInCart}}>
         <Routes>
           <Route element={ <Home /> } path="/" />
           <Route element={ <ViewProduct/> } path="/product" />
