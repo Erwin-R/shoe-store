@@ -13,10 +13,13 @@
   }
   ```
 */
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import axios from 'axios'
 import { Disclosure, RadioGroup, Tab } from '@headlessui/react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { useParams } from 'react-router-dom'
+import ShoeContext from '../context/ShoeContext'
 
 const product = {
   name: 'Zip Tote Basket',
@@ -62,6 +65,48 @@ function classNames(...classes) {
 
 const ProductPage = (props) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [item, setItem] = useState({});
+  const { id } = useParams();
+  // const products = useContext(ShoeContext).itemsInCart;
+  // const addProduct = useContext(ShoeContext).setItemsInCart;
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
+  const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/shoe/' + id)
+      .then(res => {
+        console.log(res.data.imgUrls);
+        setItem({...res.data, quantity: 1});
+      })
+      .catch(err => console.error(err));
+  }, [id]);
+
+  const addToCart = (e) => {
+    e.preventDefault();
+    let currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
+    console.log(currentProducts);
+    if(currentProducts === null){
+      sessionStorage.setItem('itemsInCart', JSON.stringify([item]));
+      currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
+      setItemsInCart(currentProducts);
+    } else {
+      for(let i in currentProducts){
+        console.log(currentProducts[i]._id);
+        console.log(item._id);
+        if(Object.values(currentProducts[i]).indexOf(item._id) > -1){
+          console.log('testing');
+          currentProducts[i].quantity++;
+          setItemsInCart([...currentProducts]);
+          break;
+        } else if(i === currentProducts.length - 1){
+          sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts, item]));
+          currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
+          setItemsInCart(currentProducts);
+        }
+      }
+    }
+    console.log(currentProducts);
+  }
 
   return (
     <div className="bg-white">
@@ -72,16 +117,16 @@ const ProductPage = (props) => {
             {/* Image selector */}
             <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {product.images.map((image) => (
+                {item.imgUrls?.map((image) => (
                   <Tab
-                    key={image.id}
+                    key={image}
                     className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
                   >
                     {({ selected }) => (
                       <>
-                        <span className="sr-only"> {image.name} </span>
+                        <span className="sr-only"> {image} </span>
                         <span className="absolute inset-0 overflow-hidden rounded-md">
-                          <img src={image.src} alt="" className="h-full w-full object-cover object-center" />
+                          <img src={image} alt="" className="h-full w-full object-cover object-center" />
                         </span>
                         <span
                           className={classNames(
@@ -93,16 +138,16 @@ const ProductPage = (props) => {
                       </>
                     )}
                   </Tab>
-                ))}
-              </Tab.List>
+                ))} 
+              </Tab.List> 
             </div>
 
             <Tab.Panels className="aspect-w-1 aspect-h-1 w-full">
-              {product.images.map((image) => (
-                <Tab.Panel key={image.id}>
+              {item.imgUrls?.map((image) => (
+                <Tab.Panel key={image}>
                   <img
-                    src={image.src}
-                    alt={image.alt}
+                    src={image}
+                    alt={image}
                     className="h-full w-full object-cover object-center sm:rounded-lg"
                   />
                 </Tab.Panel>
@@ -112,15 +157,15 @@ const ProductPage = (props) => {
 
           {/* Product info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{product.name}</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{item.name}</h1>
 
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
+              <p className="text-3xl tracking-tight text-gray-900">${item.price}</p>
             </div>
 
             {/* Reviews */}
-            <div className="mt-3">
+            {/* <div className="mt-3">
               <h3 className="sr-only">Reviews</h3>
               <div className="flex items-center">
                 <div className="flex items-center">
@@ -137,20 +182,20 @@ const ProductPage = (props) => {
                 </div>
                 <p className="sr-only">{product.rating} out of 5 stars</p>
               </div>
-            </div>
+            </div> */}
 
             <div className="mt-6">
               <h3 className="sr-only">Description</h3>
 
               <div
                 className="space-y-6 text-base text-gray-700"
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: item.description }}
               />
             </div>
 
             <form className="mt-6">
               {/* Colors */}
-              <div>
+              {/* <div>
                 <h3 className="text-sm text-gray-600">Color</h3>
 
                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
@@ -184,12 +229,13 @@ const ProductPage = (props) => {
                     ))}
                   </span>
                 </RadioGroup>
-              </div>
+              </div> */}
 
               <div className="sm:flex-col1 mt-10 flex">
                 <button
                   type="submit"
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                  onClick={(e) => addToCart(e)}
                 >
                   Add to bag
                 </button>

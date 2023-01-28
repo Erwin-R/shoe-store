@@ -12,10 +12,11 @@
   }
   ```
 */
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext, useEffect } from 'react';
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react';
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import ShoeContext from '../context/ShoeContext';
 
 import SlidingCart from './SlidingCart';
 
@@ -40,10 +41,10 @@ const navigation = {
       ],
       sections: [
         {
-          id: 'clothing',
-          name: 'Clothing',
+          id: 'shoes',
+          name: 'Shoes',
           items: [
-            { name: 'Tops', href: '#' },
+            { name: 'Adidas', href: '/shoe/view-all' },
             { name: 'Dresses', href: '#' },
             { name: 'Pants', href: '#' },
             { name: 'Denim', href: '#' },
@@ -152,9 +153,19 @@ const NavBar = (props) => {
 
   const [loaded, setLoaded] = useState(false);
 
+  // const itemsInCart = useContext(ShoeContext).itemsInCart.length;
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
+  const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+
   const openCart = (slide) => {
     setLoaded(slide)
   }
+
+  useEffect(() => {
+    const numItems = JSON.parse(sessionStorage.getItem('itemsInCart'))
+    // numItems === null ?
+    setItemsInCart(numItems);
+  }, [])
 
   return (
     <div className="bg-white">
@@ -470,7 +481,8 @@ const NavBar = (props) => {
                       className="h-6 w-6 flex-shrink-0 text-gray-500 group-hover:text-green"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    {itemsInCart === null ? <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span> : 
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{itemsInCart.length}</span>}
                     <span className="sr-only">items in cart, view bag</span>
 
                   
