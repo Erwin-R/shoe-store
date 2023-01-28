@@ -19,6 +19,8 @@ import {
   useStripe, 
   useElements 
 } from "@stripe/react-stripe-js";
+import '../App.css';
+
 const products = [
   {
     id: 1,
@@ -37,6 +39,7 @@ const Checkout = (props) => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,7 +71,7 @@ const Checkout = (props) => {
               break;
         }
       });
-  }, [stripe])
+  }, [])
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -82,9 +85,11 @@ const Checkout = (props) => {
     const { error } = await stripe.confirmPayment({
       elements, 
       confirmParams: {
-        return_url: "http://localhost:3000/summary"
+        return_url: "http://localhost:3000/summary",
+        receipt_email: email
       }
     });
+    console.log(email)
     
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
@@ -168,13 +173,17 @@ const Checkout = (props) => {
             Payment and shipping details
           </h2>
 
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
               <div>
                 <h3 id="contact-info-heading" className="text-lg font-medium text-gray-900">
                   Contact information
                 </h3>
+                <LinkAuthenticationElement
+                  id="link-authentication-element"
+                  onChange={(e) => setEmail(e.value.email)}
 
+                />
                 <div className="mt-6">
                   <PaymentElement id="payment-element" options={paymentElementOptions}/>
                   {/* <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">

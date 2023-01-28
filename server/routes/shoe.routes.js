@@ -5,6 +5,7 @@ module.exports = function(app){
   app.post('/api/shoe', ShoeController.createShoe);
   
   app.get('/api/shoe/:id', ShoeController.getShoe);
+  app.get('/db/shoe/:name', ShoeController.getShoeByName);
 
   app.put('/api/shoe/:id', ShoeController.updateShoe);
 
