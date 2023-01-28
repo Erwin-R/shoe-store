@@ -153,18 +153,18 @@ const NavBar = (props) => {
 
   const [loaded, setLoaded] = useState(false);
 
-  // const itemsInCart = useContext(ShoeContext).itemsInCart.length;
-  const itemsInCart = useContext(ShoeContext).itemsInCart;
-  const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  // const itemsInCart = useContext(ShoeContext).itemsInCart;
+  // const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  const numInCart = useContext(ShoeContext).numInCart;
 
   const openCart = (slide) => {
     setLoaded(slide)
   }
 
   useEffect(() => {
-    const numItems = JSON.parse(sessionStorage.getItem('itemsInCart'))
-    // numItems === null ?
-    setItemsInCart(numItems);
+    // const numItems = JSON.parse(sessionStorage.getItem('itemsInCart'))
+    // // numItems === null ?
+    // setItemsInCart(numItems);
   }, [])
 
   return (
@@ -481,8 +481,7 @@ const NavBar = (props) => {
                       className="h-6 w-6 flex-shrink-0 text-gray-500 group-hover:text-green"
                       aria-hidden="true"
                     />
-                    {itemsInCart === null ? <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span> : 
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{itemsInCart.length}</span>}
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{numInCart}</span>
                     <span className="sr-only">items in cart, view bag</span>
 
                   

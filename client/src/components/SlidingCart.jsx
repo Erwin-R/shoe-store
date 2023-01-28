@@ -1,8 +1,9 @@
-import { Fragment, useEffect, useState, useContext } from 'react'
+import { Fragment, useEffect, useState, useContext, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import ShoeContext from '../context/ShoeContext'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const products = [
   {
@@ -31,18 +32,36 @@ const products = [
 
 const SlidingCart = (props) => {
   const [open, setOpen] = useState(props.loaded)
+  const [subtotal, setSubtotal] = useState(0);
 
   const openCart = props.openCart;
   const itemsInCart = useContext(ShoeContext).itemsInCart;
   const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  const numInCart = useContext(ShoeContext).numInCart;
+  const setNumInCart = useContext(ShoeContext).setNumInCart;
 
   useEffect(() => {
     setOpen(props.loaded)
-  }, [props])
+    let sum = 0;
+    for(let i in itemsInCart){
+      sum += itemsInCart[i].price * itemsInCart[i].quantity;
+    }
+    setSubtotal(sum);
+  }, [props, itemsInCart])
 
   const closeCart = () => {
     setOpen(!open);
     openCart(false);
+  }
+
+  const removeFromCart = (e, idx) => {
+    e.preventDefault();
+    const quantity = itemsInCart[idx].quantity;
+    itemsInCart.splice(idx, 1);
+    setItemsInCart([...itemsInCart]);
+    sessionStorage.setItem('itemsInCart', JSON.stringify([...itemsInCart]));
+    sessionStorage.setItem('numInCart', numInCart - quantity);
+    setNumInCart(numInCart - quantity);
   }
 
 
@@ -96,8 +115,8 @@ const SlidingCart = (props) => {
                       <div className="mt-8">
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
-                            {itemsInCart?.map((product) => (
-                              <li key={product._id} className="flex py-6">
+                            {itemsInCart?.map((product, productIdx) => (
+                              <li key={product._id + productIdx} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
                                     src={product.imgUrls[0]}
@@ -123,6 +142,7 @@ const SlidingCart = (props) => {
                                       <button
                                         type="button"
                                         className="font-medium text-dark-blue hover:text-light-blue"
+                                        onClick={(e) => removeFromCart(e, productIdx)}
                                       >
                                         Remove
                                       </button>
@@ -139,7 +159,7 @@ const SlidingCart = (props) => {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>${subtotal}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                       <div className="mt-6">

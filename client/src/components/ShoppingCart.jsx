@@ -19,12 +19,18 @@ import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroic
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ShoeContext from '../context/ShoeContext';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 const ShoppingCart = (props) => {
   const [subtotal, setSubtotal] = useState(0);
   const [taxes, setTaxes] = useState(0);
   const [total, setTotal] = useState(0);
   const products = useContext(ShoeContext).itemsInCart;
+  const numInCart = useContext(ShoeContext).numInCart;
+  const setNumInCart = useContext(ShoeContext).setNumInCart;
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
+  const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  const [animate] = useAutoAnimate();
 
   useEffect(() => {
     updateCartTotal();
@@ -34,7 +40,7 @@ const ShoppingCart = (props) => {
   const updateCartTotal = () => {
     let sum = 0;
     for(let item in products){
-      sum += parseInt(products[item].price) * products[item].amount;
+      sum += products[item].price * products[item].quantity;
     }
     setSubtotal(sum.toFixed(2));
 
@@ -46,27 +52,55 @@ const ShoppingCart = (props) => {
   }
 
   const onChangeCartSelect = (e, idx) => {
-    products[idx].amount = e.target.value;
+    const oldQuantity = products[idx].quantity;
+    const newQuantity = e.target.value;
+    products[idx].quantity = newQuantity;
+
+    sessionStorage.setItem('itemsInCart', JSON.stringify([...products]));
+    if(newQuantity >= oldQuantity){
+      sessionStorage.setItem('numInCart', numInCart + (newQuantity - oldQuantity));
+      setNumInCart(numInCart + newQuantity - 1);
+    } else {
+      sessionStorage.setItem('numInCart', numInCart - (oldQuantity - newQuantity));
+      setNumInCart(numInCart - (oldQuantity - newQuantity));
+    }
+    updateCartTotal();
+    console.log(products)
+  }
+
+  const removeFromCart = (e, idx) => {
+    e.preventDefault();
+    const quantity = itemsInCart[idx].quantity;
+    itemsInCart.splice(idx, 1);
+    setItemsInCart([...itemsInCart]);
+    sessionStorage.setItem('itemsInCart', JSON.stringify([...itemsInCart]));
+    sessionStorage.setItem('numInCart', numInCart - quantity);
+    setNumInCart(numInCart - quantity);
     updateCartTotal();
   }
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(products);
+  } 
 
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
-        <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+        <form onSubmit={onSubmitHandler} className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="lg:col-span-7">
             <h2 id="cart-heading" className="sr-only">
               Items in your shopping cart
             </h2>
 
-            <ul role="list" className="divide-y divide-gray-200 border-t border-b border-gray-200">
+            <ul ref={animate} role="list" className="divide-y divide-gray-200 border-t border-b border-gray-200">
               {products.map((product, productIdx) => (
                 <li key={product.id} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">
                     <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
+                      src={product.imgUrls[0]}
+                      alt={product.name + productIdx}
                       className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                     />
                   </div>
@@ -76,7 +110,7 @@ const ShoppingCart = (props) => {
                       <div>
                         <div className="flex justify-between">
                           <h3 className="text-sm">
-                            <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
+                            <a href={'/product/' + product.id} className="font-medium text-gray-700 hover:text-gray-800">
                               {product.name}
                             </a>
                           </h3>
@@ -97,6 +131,7 @@ const ShoppingCart = (props) => {
                         <select
                           id={`quantity-${productIdx}`}
                           name={`quantity-${productIdx}`}
+                          defaultValue={product.quantity}
                           onChange={(e) => onChangeCartSelect(e, productIdx)}
                           className="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-green focus:outline-none focus:ring-1 focus:ring-green sm:text-sm"
                         >
@@ -111,7 +146,7 @@ const ShoppingCart = (props) => {
                         </select>
 
                         <div className="absolute top-0 right-0">
-                          <button type="button" className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
+                          <button type="button" onClick={(e) => removeFromCart(e, productIdx)} className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">
                             <span className="sr-only">Remove</span>
                             <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                           </button>

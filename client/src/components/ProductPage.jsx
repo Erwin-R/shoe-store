@@ -71,6 +71,8 @@ const ProductPage = (props) => {
   // const addProduct = useContext(ShoeContext).setItemsInCart;
   const itemsInCart = useContext(ShoeContext).itemsInCart;
   const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  const numInCart = useContext(ShoeContext).numInCart;
+  const setNumInCart = useContext(ShoeContext).setNumInCart;
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/shoe/' + id)
@@ -84,28 +86,30 @@ const ProductPage = (props) => {
   const addToCart = (e) => {
     e.preventDefault();
     let currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
-    console.log(currentProducts);
-    if(currentProducts === null){
-      sessionStorage.setItem('itemsInCart', JSON.stringify([item]));
-      currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
-      setItemsInCart(currentProducts);
-    } else {
+
+    if(currentProducts !== null){
       for(let i in currentProducts){
-        console.log(currentProducts[i]._id);
-        console.log(item._id);
-        if(Object.values(currentProducts[i]).indexOf(item._id) > -1){
-          console.log('testing');
+        console.log(currentProducts[i])
+        if(Object.values(currentProducts[i]).includes(item._id)){
           currentProducts[i].quantity++;
-          setItemsInCart([...currentProducts]);
-          break;
-        } else if(i === currentProducts.length - 1){
-          sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts, item]));
-          currentProducts = JSON.parse(sessionStorage.getItem('itemsInCart'));
-          setItemsInCart(currentProducts);
+          sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts]));
+          sessionStorage.setItem('numInCart', numInCart + 1);
+          const updateItemsInCart = JSON.parse(sessionStorage.getItem('itemsInCart'));
+          setItemsInCart(updateItemsInCart);
+          setNumInCart(sessionStorage.numInCart);
+          console.log('hello')
+          return;
         }
       }
+      sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts, item]));
+      sessionStorage.setItem('numInCart', numInCart + 1);
+      const updateItemsInCart = JSON.parse(sessionStorage.getItem('itemsInCart'));
+      setItemsInCart(updateItemsInCart);
+    } else {
+      sessionStorage.setItem('itemsInCart', JSON.stringify([item]));
+      sessionStorage.numInCart = 1;
     }
-    console.log(currentProducts);
+    setNumInCart(sessionStorage.numInCart);
   }
 
   return (
