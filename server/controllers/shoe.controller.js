@@ -34,3 +34,9 @@ module.exports.deleteShoe = (req, res) => {
     .then(deletingShoe => res.json(deletingShoe))
     .catch(err => res.status(400).json(err));
 }
+
+module.exports.getShoeByName = (req, res) => {
+  Shoe.findOne({name: req.params.name})
+    .then(shoe => res.json(shoe))
+    .catch(err => res.status(400).json(err))
+}

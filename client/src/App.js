@@ -11,6 +11,7 @@ import ViewAllShoes from './views/ViewAllShoes';
 import Home from './views/Home';
 import SlidingCart from './components/SlidingCart';
 import CheckoutPage from './views/CheckoutPage';
+import AdminPage from './views/AdminPage';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
           <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
           <Route element={ <SlidingCart/> } path="/slide"/>
           <Route element={ <CheckoutPage/> } path="/checkout"/>
+          <Route element={<AdminPage/>} path="/admin"/>
         </Routes>
       </ShoeContext.Provider>
     </div>
