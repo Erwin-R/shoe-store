@@ -20,13 +20,7 @@ import ProductList from './ProductList'
 import React, {useEffect} from 'react';
 import axios from 'axios';
 
-const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
+
 const subCategories = [
   { name: 'Totes', href: '#' },
   { name: 'Backpacks', href: '#' },
@@ -76,11 +70,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
 const SideBar = (props) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   const [allShoes, setAllShoes] = useState([]);
   const [loaded, setLoaded] = useState("");
+
 
   useEffect(() => {
       axios.get('http://localhost:8000/api/shoes')
@@ -90,6 +86,53 @@ const SideBar = (props) => {
           })
           .catch(err => console.log(err))
   }, [])
+
+  const handleName = () => {
+    axios.get('http://localhost:8000/api/shoes')
+            .then(res => {
+                console.log(res.data.shoes);
+                const sortedShoes = res.data.shoes;
+                sortedShoes.sort((a, b) => {
+                    let strA = a.name.toLowerCase();
+                    let strB = b.name.toLowerCase();
+                    if (strA < strB) {
+                        return -1;
+                    } else if (strA > strB) {
+                        return 1;
+                    }
+                    return 0;
+                })
+                setAllShoes(sortedShoes);
+            })
+            .catch(err => console.error(err));
+}
+
+const handleLow = () => {
+    axios.get('http://localhost:8000/api/shoes')
+        .then(res => {
+            const sortedShoes = res.data.shoes;
+            sortedShoes.sort((a,b) => a.price - b.price);
+            setAllShoes(sortedShoes);
+        })
+        .catch(err => console.error(err));
+}
+
+const handleHigh = () => {
+    axios.get('http://localhost:8000/api/shoes')
+        .then(res => {
+            const sortedShoes = res.data.shoes;
+            sortedShoes.sort((a,b) => b.price - a.price);
+            setAllShoes(sortedShoes);
+        })
+        .catch(err => console.error(err));
+}
+
+// const sortOptions = [
+//     { name: 'Most Popular', sort: '#', current: false },
+//     { name: 'Name', sort: {handleName}, current: true },
+//     { name: 'Price: Low to High', sort: '#', current: false },
+//     { name: 'Price: High to Low', sort: '#', current: false },
+//   ]
 
   return (
     <div className="bg-white">
@@ -196,7 +239,7 @@ const SideBar = (props) => {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between  pt-6 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-dark-blue">All Products</h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
@@ -204,7 +247,7 @@ const SideBar = (props) => {
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     Sort
                     <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -221,31 +264,36 @@ const SideBar = (props) => {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                      {sortOptions.map((option) => (
+                      {/* {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
-                              )}
+                            <p
+                              onClick={option.sort}
+                              className={classNames(option.current ? 'font-medium text-gray-900' : 'text-gray-500',active ? 'bg-gray-100' : '','block px-4 py-2 text-sm')}
                             >
                               {option.name}
-                            </a>
+                            </p>
                           )}
                         </Menu.Item>
-                      ))}
+                      ))} */}
+                      <Menu.Item>
+                        <p onClick={handleName} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>Alphabetically A-Z</p>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <p onClick={handleLow} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>Price: Low to High</p>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <p onClick={handleHigh} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>Price: High to Low</p>
+                      </Menu.Item>
                     </div>
                   </Menu.Items>
                 </Transition>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+              {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"

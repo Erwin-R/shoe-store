@@ -188,8 +188,8 @@ const ProductList = (props) => {
                 />
               </div>
               <h3 className="mt-4 font-medium text-gray-900">{shoe.name}</h3>
-              <p className="italic text-gray-500">{shoe.categories[0]}</p>
-              <p className="mt-2 font-medium text-gray-900">${shoe.price}</p>
+              <p className="italic text-green">{shoe.categories[0]}</p>
+              <p className="mt-2 font-medium text-dark-blue">${shoe.price}</p>
             </Link>
             );
           }

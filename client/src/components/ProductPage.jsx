@@ -43,19 +43,19 @@ const product = {
     <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
   `,
   details: [
-    {
-      name: 'Features',
-      items: [
-        'Multiple strap configurations',
-        'Spacious interior with top zip',
-        'Leather handle and tabs',
-        'Interior dividers',
-        'Stainless strap loops',
-        'Double stitched construction',
-        'Water-resistant',
-      ],
-    },
-    // More sections...
+    // {
+    //   name: 'Features',
+    //   items: [
+    //     'Multiple strap configurations',
+    //     'Spacious interior with top zip',
+    //     'Leather handle and tabs',
+    //     'Interior dividers',
+    //     'Stainless strap loops',
+    //     'Double stitched construction',
+    //     'Water-resistant',
+    //   ],
+    // },
+    // // More sections...
   ],
 }
 
@@ -134,7 +134,7 @@ const ProductPage = (props) => {
                         </span>
                         <span
                           className={classNames(
-                            selected ? 'ring-indigo-500' : 'ring-transparent',
+                            selected ? 'ring-green' : 'ring-transparent',
                             'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
                           )}
                           aria-hidden="true"
@@ -161,6 +161,7 @@ const ProductPage = (props) => {
 
           {/* Product info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+            {item.categories ? <h4 className='text-green tracking-tight'>{item.categories[0]}</h4> : <p></p>}
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">{item.name}</h1>
 
             <div className="mt-3">
@@ -238,7 +239,7 @@ const ProductPage = (props) => {
               <div className="sm:flex-col1 mt-10 flex">
                 <button
                   type="submit"
-                  className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                  className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-dark-blue py-3 px-8 text-base font-medium text-white hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   onClick={(e) => addToCart(e)}
                 >
                   Add to bag
@@ -248,7 +249,7 @@ const ProductPage = (props) => {
                   type="button"
                   className="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 >
-                  <HeartIcon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+                  <HeartIcon className="h-6 w-6 flex-shrink-0 text-light-blue" aria-hidden="true" />
                   <span className="sr-only">Add to favorites</span>
                 </button>
               </div>
@@ -267,7 +268,7 @@ const ProductPage = (props) => {
                         <h3>
                           <Disclosure.Button className="group relative flex w-full items-center justify-between py-6 text-left">
                             <span
-                              className={classNames(open ? 'text-indigo-600' : 'text-gray-900', 'text-sm font-medium')}
+                              className={classNames(open ? 'text-dark-blue' : 'text-gray-900', 'text-sm font-medium')}
                             >
                               {detail.name}
                             </span>

@@ -1,25 +1,30 @@
+import { ChatBubbleLeftRightIcon, GiftTopIcon, GlobeAltIcon, ShoppingCartIcon,  } from '@heroicons/react/24/outline';
+
+
 const incentives = [
   {
     name: 'Free Shipping',
     description: "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg',
+    icon: <GlobeAltIcon />,
   },
   {
     name: '24/7 Customer Support',
     description: 'Our AI chat widget is powered by a naive series of if/else statements. Guaranteed to irritate.',
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg',
+    icon: <ChatBubbleLeftRightIcon />,
   },
   {
     name: 'Fast Shopping Cart',
     description: "Look how fast that cart is going. What does this mean for the actual experience? I don't know.",
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg',
+    icon: <ShoppingCartIcon />,
   },
   {
     name: 'Gift Cards',
     description: "Buy them for your friends, especially if they don't like our store. Free money for us, it's great.",
-    imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg',
+    icon: <GiftTopIcon />,
   },
 ]
+
+
 
 const Incentives = (props) => {
   return (
@@ -28,8 +33,8 @@ const Incentives = (props) => {
         <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
           {incentives.map((incentive) => (
             <div key={incentive.name}>
-              <img src={incentive.imageSrc} alt="" className="h-24 w-auto" />
-              <h3 className="mt-6 text-sm font-medium text-gray-900">{incentive.name}</h3>
+              <h1 className='h-12 w-12 text-green'>{incentive.icon}</h1>
+              <h3 className="mt-6 text-sm font-medium text-dark-blue">{incentive.name}</h3>
               <p className="mt-2 text-sm text-gray-500">{incentive.description}</p>
             </div>
           ))}
@@ -38,4 +43,5 @@ const Incentives = (props) => {
     </div>
   )
 }
+
 export default Incentives;

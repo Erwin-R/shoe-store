@@ -38,7 +38,7 @@ const CheckoutPage = (props) => {
 
   return(
     <>
-      <NavBar/>
+      {/* <NavBar/> */}
       {clientSecret && 
         <Elements options={options} stripe={stripePromise}>
           <Checkout/>
