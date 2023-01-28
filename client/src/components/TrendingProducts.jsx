@@ -12,6 +12,7 @@
 
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const TrendingProduct = (props) => {
 
@@ -59,7 +60,7 @@ const TrendingProduct = (props) => {
 
         <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
           {shoes.map((product, i) => (
-            <div key={i} className="group relative">
+            <Link key={i} to={"/product/" + product._id} className="group relative">
               <div className="h-56 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-72 xl:h-80">
                 <img
                   src={product.imgUrls[0]}
@@ -75,16 +76,16 @@ const TrendingProduct = (props) => {
               </h3>
               <p className="mt-1 text-sm text-green">{product.categories[0]}</p>
               <p className="mt-1 text-md font-medium text-dark-blue">${product.price}</p>
-            </div>
+            </Link>
           ))}
         </div>
 
-        <div className="mt-8 text-sm md:hidden">
+        {/* <div className="mt-8 text-sm md:hidden">
           <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
             Shop the collection
             <span aria-hidden="true"> &rarr;</span>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -104,14 +104,14 @@ const Checkout = (props) => {
     <div className="bg-white">
       {/* Background color split screen for large screens */}
       <div className="fixed top-0 left-0 hidden h-full w-1/2 bg-white lg:block" aria-hidden="true" />
-      <div className="fixed top-0 right-0 hidden h-full w-1/2 bg-indigo-900 lg:block" aria-hidden="true" />
+      <div className="fixed top-0 right-0 hidden h-full w-1/2 bg-dark-blue lg:block" aria-hidden="true" />
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 lg:pt-16">
         <h1 className="sr-only">Checkout</h1>
 
         <section
           aria-labelledby="summary-heading"
-          className="bg-indigo-900 py-12 text-indigo-300 md:px-10 lg:col-start-2 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:bg-transparent lg:px-0 lg:pt-0 lg:pb-24"
+          className="bg-dark-blue py-12 text-white md:px-10 lg:col-start-2 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:bg-transparent lg:px-0 lg:pt-0 lg:pb-24"
         >
           <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
             <h2 id="summary-heading" className="sr-only">
@@ -252,66 +252,70 @@ const Checkout = (props) => {
                 </div>
               </div> */}
 
-              <div className="mt-10">
+<div className="mt-10">
                 <h3 className="text-lg font-medium text-gray-900">Shipping address</h3>
 
                 <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
                   <div className="sm:col-span-3">
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="address" className="block text-md text-md text-gray-700 font-normal">
                       Address
                     </label>
                     <div className="mt-1">
                       <input
+                        style={{border: '1px solid #e6e6e6'}}
                         type="text"
                         id="address"
                         name="address"
                         autoComplete="street-address"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="city" className="block text-md text-md text-gray-700 font-normal">
                       City
                     </label>
                     <div className="mt-1">
                       <input
+                        style={{border: '1px solid #e6e6e6'}}
                         type="text"
                         id="city"
                         name="city"
                         autoComplete="address-level2"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="region" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="region" className="block text-md text-md text-gray-700 font-normal">
                       State / Province
                     </label>
                     <div className="mt-1">
                       <input
+                        style={{border: '1px solid #e6e6e6'}}
                         type="text"
                         id="region"
                         name="region"
                         autoComplete="address-level1"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
-                      Postal code
+                    <label htmlFor="postal-code" className="block text-md text-md text-gray-700 font-normal">
+                      ZIP
                     </label>
                     <div className="mt-1">
                       <input
+                        style={{border: '1px solid #e6e6e6'}}
                         type="text"
                         id="postal-code"
                         name="postal-code"
                         autoComplete="postal-code"
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
                       />
                     </div>
                   </div>
@@ -327,7 +331,7 @@ const Checkout = (props) => {
                     name="same-as-shipping"
                     type="checkbox"
                     defaultChecked
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="h-4 w-4 rounded border-gray-300 text-dark-blue focus:ring-green"
                   />
                   <div className="ml-2">
                     <label htmlFor="same-as-shipping" className="text-sm font-medium text-gray-900">
@@ -341,7 +345,7 @@ const Checkout = (props) => {
                 <button
                   id="submit"
                   type="submit"
-                  className="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                  className="rounded-md border border-transparent bg-dark-blue py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50"
                   disabled={isLoading || !stripe || !elements}
                 >
                   <span id="button-text">

@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from '../components/NavBar';
 import TrendingProduct from "../components/TrendingProducts";
+import Incentives from "../components/Incentives";
 import Footer from '../components/Footer';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -54,6 +55,7 @@ const Home = () => {
             </div>
 
             <TrendingProduct />
+            <Incentives />
             <Footer />
         </div>
     );
