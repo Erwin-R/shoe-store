@@ -22,7 +22,7 @@ const CheckoutPage = (props) => {
     })
       .then(res => {
         setClientSecret(res.data.clientSecret);
-        console.log(res.data.clientSecret);
+        // console.log(res.data.clientSecret);
       })
       .catch(err => console.error(err));
   }, []);
