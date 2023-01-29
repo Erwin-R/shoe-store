@@ -13,7 +13,6 @@ import SlidingCart from './components/SlidingCart';
 import CheckoutPage from './views/CheckoutPage';
 import { useState, useEffect } from 'react';
 import AdminPage from './views/AdminPage';
-import { useState } from 'react';
 import ViewProduct from './views/ViewProduct';
 
 
