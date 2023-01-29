@@ -40,6 +40,7 @@ const AdminForm = (props) => {
     const [brand, setBrand] = useState("");
     const [categories, setCategories] = useState([]);
     const [colors, setColors] = useState([]);
+    const [mongoPrice, setMongoPrice] = useState('');
 
     //Price States
     const [stripePrice, setStripePrice] = useState("")
@@ -128,7 +129,7 @@ const AdminForm = (props) => {
                             console.log(res.data._id)
                             console.log("hello from axios get")
                             axios.put('http://localhost:8000/api/shoe/' + res.data._id, {
-                                price: stripePrice
+                                price: mongoPrice
                             })
                                 .then(res => {
                                     setStripePrice("")
@@ -213,7 +214,12 @@ const AdminForm = (props) => {
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Price of Product:</label>
                     <div>
-                        <input type="number" className="w-full border rounded-md p-2" onChange={(e) => setStripePrice(e.target.value)} value={stripePrice}/>
+                        <input type="number" className="w-full border rounded-md p-2" 
+                        onChange={(e) => {
+                            setStripePrice(e.target.value)
+                            setMongoPrice(e.target.value / 100)
+                        }} 
+                        value={stripePrice}/>
                     </div>
                 </div>
                 <div className='mb-3 row'>
