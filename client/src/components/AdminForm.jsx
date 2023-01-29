@@ -39,6 +39,7 @@ const AdminForm = (props) => {
     const [img4, setImg4] = useState("");
     const [brand, setBrand] = useState("");
     const [categories, setCategories] = useState([]);
+    const [colors, setColors] = useState([]);
 
     //Price States
     const [stripePrice, setStripePrice] = useState("")
@@ -66,7 +67,8 @@ const AdminForm = (props) => {
             size: size.split(","),
             price,
             brand,
-            categories
+            categories: categories.split(","),
+            colors: colors.split(",")
         })
             .then(res => {
                 console.log(res)
@@ -87,6 +89,8 @@ const AdminForm = (props) => {
                         setImg3("");
                         setImg4("");
                         setPrice("");
+                        setColors([]);
+                        setCategories([]);
                         setImgUrls([]);
                         console.log(res)
                     })
@@ -165,12 +169,18 @@ const AdminForm = (props) => {
                         <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setSize(e.target.value)} value={size}/>
                     </div>
                 </div>
-                {/* <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Price:</label>
+                <div className='mb-3 row'>
+                    <label htmlFor="" className="col-form-label">Colors:</label>
                     <div>
-                        <input type="number" className="w-full border rounded-md p-2" onChange={(e) => setPrice(e.target.value)} value={price}/>
+                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setColors(e.target.value)} value={colors}/>
                     </div>
-                </div> */}
+                </div>
+                <div className='mb-3 row'>
+                    <label htmlFor="" className="col-form-label">Categories:</label>
+                    <div>
+                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setCategories(e.target.value)} value={categories}/>
+                    </div>
+                </div>
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Image URL 1:</label>
                     <div>

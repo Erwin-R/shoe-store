@@ -1,9 +1,9 @@
 const { Shoe } = require('../models/shoe.model');
 
 module.exports.createShoe = (req, res) => {
-  const { name, size, price, description, imgUrls, brand, categories } = req.body;
+  const { name, size, price, description, imgUrls, brand, categories, colors } = req.body;
   Shoe.create({
-    name, size, price, description, imgUrls, brand, categories
+    name, size, price, description, imgUrls, brand, categories, colors
   })
     .then(shoe => res.json(shoe))
     .catch(err => res.status(400).json(err));

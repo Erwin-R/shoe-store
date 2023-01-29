@@ -53,7 +53,15 @@ const ShoeSchema = new mongoose.Schema({
     //   true,
     //   "{PATH} is required"
     // ],
-    default: ["No Category"]
+    // default: ["No Category"]
+  },
+  colors: {
+    type: [String],
+    // required: [
+    //   true,
+    //   "{PATH} is required"
+    // ],
+    // default: ["No Category"]
   }
 }, {timestamps: true});
 module.exports.Shoe = mongoose.model('Shoe', ShoeSchema);
