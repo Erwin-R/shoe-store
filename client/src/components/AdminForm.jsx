@@ -49,13 +49,16 @@ const AdminForm = (props) => {
     const [dbName, setDbName] = useState("")
 
     const putImagesTogether = () => {
-        setImgUrls([img1, img2, img3, img4])
+        const tempArray = [img1, img2, img3, img4]
+        setImgUrls([...tempArray])
     }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         // console.log(imgUrls.split("~"));
         putImagesTogether();
+        console.log(img1);
+        console.log(imgUrls)
         axios.post('http://localhost:8000/api/shoe', {
             name,
             description,
@@ -84,6 +87,7 @@ const AdminForm = (props) => {
                         setImg3("");
                         setImg4("");
                         setPrice("");
+                        setImgUrls([]);
                         console.log(res)
                     })
                     .catch(err => console.log(err))
@@ -170,28 +174,28 @@ const AdminForm = (props) => {
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Image URL 1:</label>
                     <div>
-                        <input type="text" className="form-control" onChange={(e) => setImg1(e.target.value)} value={img1} />
+                        <input id="img1" type="text" className="form-control" onChange={(e) => setImg1(e.target.value)} value={img1}/>
                     </div>
                 </div>
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Image URL 2:</label>
                     <div>
-                        <input type="text" className="form-control" onChange={(e) => setImg2(e.target.value)} value={img2} />
+                        <input id="img2" type="text" className="form-control" onChange={(e) => setImg2(e.target.value)} value={img2} />
                     </div>
                 </div>
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Image URL 3:</label>
                     <div>
-                        <input type="text" className="form-control" onChange={(e) => setImg3(e.target.value)} value={img3} />
+                        <input id="img3" type="text" className="form-control" onChange={(e) => setImg3(e.target.value)} value={img3} />
                     </div>
                 </div>
                 <div className='mb-3 row'>
                     <label htmlFor="" className="col-form-label">Image URL 4:</label>
                     <div>
-                        <input type="text" className="form-control" onChange={(e) => setImg4(e.target.value)} value={img4} />
+                        <input id="img4" type="text" className="form-control" onChange={(e) => setImg4(e.target.value)} value={img4} />
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary mt-2">Create Product</button>
+                <button type="submit" onClick={() => putImagesTogether()} className="btn btn-success mt-2">Create Product</button>
             </form>
 
             <h2 className="text-center mt-5">Add a price</h2>

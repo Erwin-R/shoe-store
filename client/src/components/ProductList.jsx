@@ -158,7 +158,7 @@ const products = [
 ]
 
 const ProductList = (props) => {
-  console.log(props.allShoes.shoes);
+  console.log(props.allShoes);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden py-16 px-4 sm:py-4 sm:px-6 lg:px-4">
