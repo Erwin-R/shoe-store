@@ -87,7 +87,7 @@ const ShoppingCart = (props) => {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-dark-blue sm:text-4xl">Shopping Cart</h1>
         <form onSubmit={onSubmitHandler} className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="lg:col-span-7">
             <h2 id="cart-heading" className="sr-only">
@@ -117,11 +117,11 @@ const ShoppingCart = (props) => {
                         </div>
                         <div className="mt-1 flex text-sm">
                           <p className="text-gray-500">{product.color}</p>
-                          {product.size ? (
+                          {/* {product.size ? (
                             <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">{product.size}</p>
-                          ) : null}
+                          ) : null} */}
                         </div>
-                        <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p>
+                        {/* <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p> */}
                       </div>
 
                       <div className="mt-4 sm:mt-0 sm:pr-9">
@@ -154,14 +154,15 @@ const ShoppingCart = (props) => {
                       </div>
                     </div>
 
-                    <p className="mt-4 flex space-x-2 text-sm text-gray-700">
-                      {product.inStock ? (
+                    <p className="mt-4 flex space-x-2 text-sm font-medium text-gray-900">
+                        ${product.price}
+                      {/* {product.inStock ? (
                         <CheckIcon className="h-5 w-5 flex-shrink-0 text-green-500" aria-hidden="true" />
                       ) : (
                         <ClockIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden="true" />
                       )}
 
-                      <span>{product.inStock ? 'In stock' : `Ships in ${product.leadTime}`}</span>
+                      <span>{product.inStock ? 'In stock' : `Ships in ${product.leadTime}`}</span> */}
                     </p>
                   </div>
                 </li>

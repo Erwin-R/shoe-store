@@ -20,6 +20,11 @@ import ShoeContext from '../context/ShoeContext';
 
 import SlidingCart from './SlidingCart';
 
+import navbar from '../images/navbar.jpg';
+import navbar1 from '../images/navbar1.jpg';
+import navbar2 from '../images/navbar2.jpg';
+
+
 const navigation = {
   categories: [
     {
@@ -27,16 +32,18 @@ const navigation = {
       name: 'Shop All',
       featured: [
         {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-          imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+          name: 'All Shoes',
+          href: '/shoe/view-all',
+          imageSrc: navbar1,
+          imageAlt: '',
+          p:'Shop now'
         },
         {
-          name: 'Basic Tees',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-          imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+          name: '',
+          href: '',
+          imageSrc: navbar2,
+          imageAlt: '',
+          p: ''
         },
       ],
       sections: [
@@ -55,18 +62,18 @@ const navigation = {
             { name: 'Browse All', href: '#' },
           ],
         },
-        {
-          id: 'accessories',
-          name: 'Accessories',
-          items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
-          ],
-        },
+        // {
+        //   id: 'accessories',
+        //   name: 'Accessories',
+        //   items: [
+        //     { name: 'Watches', href: '#' },
+        //     { name: 'Wallets', href: '#' },
+        //     { name: 'Bags', href: '#' },
+        //     { name: 'Sunglasses', href: '#' },
+        //     { name: 'Hats', href: '#' },
+        //     { name: 'Belts', href: '#' },
+        //   ],
+        // },
         {
           id: 'brands',
           name: 'Brands',
@@ -239,7 +246,7 @@ const NavBar = (props) => {
                                 {item.name}
                               </a>
                               <p aria-hidden="true" className="mt-1">
-                                Shop now
+                                {item.p}
                               </p>
                             </div>
                           ))}
@@ -392,7 +399,7 @@ const NavBar = (props) => {
                                             {item.name}
                                           </a>
                                           <p aria-hidden="true" className="mt-1">
-                                            Shop now
+                                            {item.p}
                                           </p>
                                         </div>
                                       ))}

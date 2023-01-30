@@ -182,7 +182,7 @@ const Checkout = (props) => {
                 <LinkAuthenticationElement
                   id="link-authentication-element"
                   onChange={(e) => setEmail(e.value.email)}
-
+                  className="mt-6"
                 />
                 <div className="mt-6">
                   <PaymentElement id="payment-element" options={paymentElementOptions}/>
@@ -267,7 +267,7 @@ const Checkout = (props) => {
                         id="address"
                         name="address"
                         autoComplete="street-address"
-                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-2.5"
                       />
                     </div>
                   </div>
