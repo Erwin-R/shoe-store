@@ -12,7 +12,8 @@
   }
   ```
 */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import ShoeContext from '../context/ShoeContext';
 import { 
   PaymentElement, 
   LinkAuthenticationElement, 
@@ -38,6 +39,7 @@ const products = [
 const Checkout = (props) => {
   const stripe = useStripe();
   const elements = useElements();
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
