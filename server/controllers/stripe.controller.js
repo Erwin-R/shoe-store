@@ -7,24 +7,34 @@ const calculateOrderAmount = (items) => {
     // Replace this constant with a calculation of the order's amount
     // Calculate the order total on the server to prevent
     // people from directly manipulating the amount on the client
-    return 1400;
+    console.log(items);
+    let subtotal = 0;
+    const tax = 1.05;
+    const shipping = 500;
+    for(let i in items){
+        console.log(items[i].unit_amount);
+        subtotal += items[i].unit_amount;
+    }
+    const total = (subtotal * tax) + shipping
+    return total;
 };
 
 
 
 module.exports.createPaymentIntent = async (req, res) => {
-    const { items } = req.body;
+    const { listOfDBPrices } = req.body;
 
-    // Create a PaymentIntent with the order amount and currency
+    // Create a PaymentIntent with the order amount and currency\
+    console.log(listOfDBPrices);
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: calculateOrderAmount(items),
+        amount: calculateOrderAmount(listOfDBPrices),
         currency: "usd",
         automatic_payment_methods: {
             enabled: true,
         },
     });
     console.log(paymentIntent);
-    console.log("hello spaceman!")
+    console.log(paymentIntent.amount);
     res.send({
         clientSecret: paymentIntent.client_secret,
     });
@@ -96,7 +106,7 @@ module.exports.createPriceObject = async (req, res) => {
 }
 
 module.exports.getAllPrices = async (req, res) => {
-    const price = await stripe.prices.create({
+    const price = await stripe.prices.list({
         limit: 20,
     })
     

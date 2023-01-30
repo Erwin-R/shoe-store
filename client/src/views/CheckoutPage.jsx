@@ -14,18 +14,85 @@ const stripePromise = loadStripe("pk_test_51MTv1QLALNa8Zs0RROiUyXjVDu2C55KFKvLBU
 
 const CheckoutPage = (props) => {
   const [clientSecret, setClientSecret] = useState('');
-  const products = useContext(ShoeContext);
+  const [stripeProducts, setStripeProducts] = useState([]);
+  const [stripePrices, setStripePrices] = useState([]);
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
 
   useEffect(() => {
-    axios.post('http://localhost:8000/create-payment-intent', {
-      products
-    })
+    axios.get('http://localhost:8000/v1/products')
       .then(res => {
-        setClientSecret(res.data.clientSecret);
-        // console.log(res.data.clientSecret);
+        const listOfProductsByName = totalListOfProducts();
+        const allStripeProducts = res.data.data;
+        const listOfStripeProducts = createListOfStripeProducts(listOfProductsByName, allStripeProducts);
+        console.log(listOfStripeProducts);
+        setStripeProducts(listOfStripeProducts);
+
+        axios.get('http://localhost:8000/v1/prices')
+          .then(res => {
+            const allStripePrices = res.data.data
+            const listOfDBPrices = matchingPriceIds(listOfStripeProducts, allStripePrices);
+            axios.post('http://localhost:8000/create-payment-intent', {
+              listOfDBPrices
+            })
+              .then(res => {
+                setClientSecret(res.data.clientSecret);
+                // console.log(res.data.clientSecret);
+              })
+              .catch(err => console.error(err));
+          })
+          .catch(err => console.error(err));
+
+        // axios.post('http://localhost:8000/create-payment-intent', {
+        //   stripeProducts
+        // })
+        //   .then(res => {
+        //     setClientSecret(res.data.clientSecret);
+        //     // console.log(res.data.clientSecret);
+        //   })
+        //   .catch(err => console.error(err));
       })
       .catch(err => console.error(err));
   }, []);
+
+  const totalListOfProducts = () => {
+    const tempArray = []
+    for(let i in itemsInCart){
+      let itemQuantity = itemsInCart[i].quantity;
+      while(itemQuantity > 0){
+        tempArray.push(itemsInCart[i].name);
+        itemQuantity--;
+      }
+    }
+    return tempArray;
+  }
+
+  const createListOfStripeProducts = (arr1, arr2) => {
+    const containerArr = [];
+    for(let j in arr1){
+      const currentItem = arr1[j]
+      for(let k in arr2){
+        const currentStripeItem = arr2[k].name
+        if(currentItem === currentStripeItem){
+          containerArr.push(arr2[k].default_price);
+          break;
+        }
+      }
+    }
+    console.log(containerArr);
+    return containerArr;
+  }
+
+  const matchingPriceIds = (arr1, arr2) =>{
+    const tempPriceArray = [];
+    for(let i in arr1){
+      for(let j in arr2){
+        if(arr1[i] === arr2[j].id){
+          tempPriceArray.push(arr2[j]);
+        }
+      }
+    }
+    return tempPriceArray;
+  }
 
   const appearance = {
     theme: 'stripe',
