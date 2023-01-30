@@ -3,7 +3,10 @@ import axios from 'axios'
 
 const AdminForm = (props) => {
     const [listProducts, setListProducts] = useState([]);
-    const [stripeProductId, setStripeProductId] = useState("")
+    const [stripeProductId, setStripeProductId] = useState("");
+    const [listOfPricedProducts, setListOfPricedProducts] = useState([]);
+    const [pricedStripeProduct, setPricedStripeProduct] = useState("");
+    const [pricedDBName, setPricedDBName] = useState("")
     useEffect(() => {
         axios.get('http://localhost:8000/v1/products')
             .then(res => {
@@ -13,14 +16,25 @@ const AdminForm = (props) => {
                 console.log(res.data.data)
                 console.log(holdResponse[0])
                 const result = [];
+                const pricedArr = [];
                 for(let i = 0; i < holdResponse.length; i++){
+                    console.log(i)
                     if(holdResponse[i].default_price === null){
                         result.push(holdResponse[i]);
+                    } else if(holdResponse[i].default_price != null && holdResponse[i].active != false){
+                        pricedArr.push(holdResponse[i]);
                     }
                 }
+                console.log("right here")
+                console.log(result)
                 setStripeProductId([...result][0].id);
                 setListProducts([...result]);
-                setDbName(result[0].name)
+                setDbName(result[0].name);
+                setPricedDBName(pricedArr[0].name);
+                setPricedStripeProduct([...pricedArr][0].id)
+                setListOfPricedProducts([...pricedArr]);
+                // if(result[0]){
+                // }
                 console.log(listProducts);
 
             })
@@ -142,6 +156,22 @@ const AdminForm = (props) => {
             .catch(err => console.log(err))
     }
 
+    const archiveProductHandler = (e) =>{
+        e.preventDefault();
+        axios.put('http://localhost:8000/v1/archive/' + pricedStripeProduct)
+            .then(res => {
+                console.log(res)
+                axios.get(`http://localhost:8000/db/shoe/${pricedDBName}`)
+                    .then(res => {
+                        axios.delete('http://localhost:8000/api/shoe/' + res.data._id)
+                            .then(res => console.log(res))
+                            .catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
+            })
+            .catch(err => console.error(err)) 
+    }
+
     return (
         <div>
             <h2 className="text-center text-2xl">Add a Product</h2>
@@ -240,15 +270,24 @@ const AdminForm = (props) => {
                 <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Create Product Price</button>
             </form>
 
-            <h2 className="text-center text-2xl mt-5">Add a Category</h2>
-            <form className="mx-auto w-1/2 border p-3">
+            <h2 className="text-center text-2xl mt-5">Delete a Product</h2>
+            <form className="mx-auto w-1/2 border p-3" onSubmit={archiveProductHandler}>
                 <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Name of Category:</label>
+                    <label htmlFor="" className="col-form-label">List of Products:</label>
                     <div>
-                        <input type="text" className="w-full border rounded-md p-2" />
+                        <select className="w-full border rounded-md p-2" 
+                        onChange={(e) => {
+                            setPricedStripeProduct(e.target.value.split("@")[0])
+                            setPricedDBName(e.target.value.split("@")[1])
+                        }} 
+                        >
+                            {listOfPricedProducts.map((option, i) => {
+                                return <option key={i} value={`${option.id}@${option.name}`} name={option.name}>{option.name}</option>
+                            })}
+                        </select>
                     </div>
                 </div>
-                <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Add Category</button>
+                <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Delete Product</button>
             </form>
         </div>
     );

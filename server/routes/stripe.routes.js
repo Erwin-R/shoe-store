@@ -9,6 +9,7 @@ module.exports = function(app){
     app.post('/create-payment-intent', StripeController.createPaymentIntent);
     app.post('/v1/products', StripeController.createStripeProduct);
     app.put('/v1/products/:id', StripeController.updateStripeProduct);
+    app.put('/v1/archive/:id', StripeController.archiveStripeProduct);
     app.delete('/v1/products/:id', StripeController.deleteOneProduct);
     //Price Routes
     app.post('/v1/prices', StripeController.createPriceObject);

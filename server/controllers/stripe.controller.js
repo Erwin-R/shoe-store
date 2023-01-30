@@ -54,7 +54,7 @@ module.exports.createStripeProduct = async (req, res) => {
 
 module.exports.listAllProducts = async (req, res) => {
     const product = await stripe.products.list({
-        limit: 20
+        limit: 100
     })
 
     res.send(product);
@@ -90,6 +90,17 @@ module.exports.deleteOneProduct = async (req, res) => {
         "prod_NF9rjNXe1gimA6"
     );
     res.send(deletedProduct);
+}
+
+
+module.exports.archiveStripeProduct = async (req, res) => {
+    const stripeProductId = req.params.id
+    const product = await stripe.products.update(
+        stripeProductId,
+        {active: false}
+        );
+    
+    res.send(product)
 }
 
 
