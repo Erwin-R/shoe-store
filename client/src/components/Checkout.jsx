@@ -44,10 +44,14 @@ const Checkout = (props) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [total, setTotal] = useState(0);
 
   const paymentElementOptions = { layout: 'tabs'};
 
   useEffect(() => {
+    updateCartTotal(itemsInCart);
     if(!stripe) return;
 
     const clientSecret = new URLSearchParams(window.location.search).get(
@@ -74,6 +78,20 @@ const Checkout = (props) => {
         }
       });
   }, [])
+
+  const updateCartTotal = (products) => {
+    let sum = 0;
+    for(let item in products){
+      sum += products[item].price * products[item].quantity;
+    }
+    setSubtotal(sum.toFixed(2));
+
+    const taxEstimate = sum * 0.05;
+    setTaxes(taxEstimate.toFixed(2));
+
+    const tempTotal = sum + taxEstimate + 5
+    setTotal(tempTotal.toFixed(2));
+  }
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -122,23 +140,24 @@ const Checkout = (props) => {
 
             <dl>
               <dt className="text-sm font-medium">Amount due</dt>
-              <dd className="mt-1 text-3xl font-bold tracking-tight text-white">$232.00</dd>
+              <dd className="mt-1 text-3xl font-bold tracking-tight text-white">${total}</dd>
             </dl>
 
             <ul role="list" className="divide-y divide-white divide-opacity-10 text-sm font-medium">
-              {products.map((product) => (
-                <li key={product.id} className="flex items-start space-x-4 py-6">
+              {itemsInCart.map((product, idx) => (
+                <li key={product.id + idx} className="flex items-start space-x-4 py-6">
                   <img
-                    src={product.imageSrc}
+                    src={product.imgUrls[0]}
                     alt={product.imageAlt}
                     className="h-20 w-20 flex-none rounded-md object-cover object-center"
                   />
                   <div className="flex-auto space-y-1">
                     <h3 className="text-white">{product.name}</h3>
-                    <p>{product.color}</p>
-                    <p>{product.size}</p>
+                    <p>{product.colors[0]}</p>
+                    <p>Size: {product.size}</p>
+                    <p>Qty: {product.quantity}</p>
                   </div>
-                  <p className="flex-none text-base font-medium text-white">{product.price}</p>
+                  <p className="flex-none text-base font-medium text-white">${product.price}</p>
                 </li>
               ))}
             </ul>
@@ -146,22 +165,22 @@ const Checkout = (props) => {
             <dl className="space-y-6 border-t border-white border-opacity-10 pt-6 text-sm font-medium">
               <div className="flex items-center justify-between">
                 <dt>Subtotal</dt>
-                <dd>$570.00</dd>
+                <dd>${subtotal}</dd>
               </div>
 
               <div className="flex items-center justify-between">
                 <dt>Shipping</dt>
-                <dd>$25.00</dd>
+                <dd>$5.00</dd>
               </div>
 
               <div className="flex items-center justify-between">
                 <dt>Taxes</dt>
-                <dd>$47.60</dd>
+                <dd>${taxes}</dd>
               </div>
 
               <div className="flex items-center justify-between border-t border-white border-opacity-10 pt-6 text-white">
                 <dt className="text-base">Total</dt>
-                <dd className="text-base">$642.60</dd>
+                <dd className="text-base">${total}</dd>
               </div>
             </dl>
           </div>
