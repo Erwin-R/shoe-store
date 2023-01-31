@@ -14,6 +14,7 @@ import CheckoutPage from './views/CheckoutPage';
 import { useState, useEffect } from 'react';
 import AdminPage from './views/AdminPage';
 import ViewProduct from './views/ViewProduct';
+import About from './views/About';
 
 
 
@@ -45,7 +46,8 @@ function App() {
           <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
           <Route element={ <SlidingCart/> } path="/slide"/>
           <Route element={ <CheckoutPage/> } path="/checkout"/>
-          <Route element={<AdminPage/>} path="/admin"/>
+          <Route element={ <AdminPage/> } path="/admin"/>
+          <Route element={ <About /> } path="/about" />
         </Routes>
       </ShoeContext.Provider>
     </div>

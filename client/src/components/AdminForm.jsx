@@ -173,122 +173,132 @@ const AdminForm = (props) => {
     }
 
     return (
-        <div>
-            <h2 className="text-center text-2xl">Add a Product</h2>
-            <form className="mx-auto w-1/2 border p-3 rounded-md" onSubmit={onSubmitHandler}>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Product Name:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setName(e.target.value)} value={name} />
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Product Description:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setDescription(e.target.value)} value={description} />
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Product Brand:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setBrand(e.target.value)} value={brand} />
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Shoe Sizes:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setSize(e.target.value)} value={size}/>
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Colors:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setColors(e.target.value)} value={colors}/>
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Categories:</label>
-                    <div>
-                        <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setCategories(e.target.value)} value={categories}/>
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Image URL 1:</label>
-                    <div>
-                        <input id="img1" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg1(e.target.value)} value={img1}/>
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Image URL 2:</label>
-                    <div>
-                        <input id="img2" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg2(e.target.value)} value={img2} />
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Image URL 3:</label>
-                    <div>
-                        <input id="img3" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg3(e.target.value)} value={img3} />
-                    </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Image URL 4:</label>
-                    <div>
-                        <input id="img4" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg4(e.target.value)} value={img4} />
-                    </div>
-                </div>
-                <button type="submit" onClick={() => putImagesTogether()} className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Create Product</button>
-            </form>
+        <div className='flex w-2/3 mx-auto my-10 justify-center'>
 
-            <h2 className="text-center text-2xl mt-5">Add a price</h2>
-            <form className="mx-auto w-1/2 border p-3" onSubmit={priceSubmitHandler}>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Price of Product:</label>
-                    <div>
-                        <input type="number" className="w-full border rounded-md p-2" 
-                        onChange={(e) => {
-                            setStripePrice(e.target.value)
-                            setMongoPrice(e.target.value / 100)
-                        }} 
-                        value={stripePrice}/>
+            <div className='w-1/2'>
+                <h2 className="text-center text-2xl">Add a Product</h2>
+                <form className="mx-auto border p-3 rounded-md mt-2" onSubmit={onSubmitHandler}>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Product Name:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setName(e.target.value)} value={name} />
+                        </div>
                     </div>
-                </div>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">Products:</label>
-                    <div>
-                        <select className="w-full border rounded-md p-2" onChange={(e) => {
-                            setStripeProductId(e.target.value.split("@")[0])
-                            setDbName(e.target.value.split("@")[1])
-                        }} 
-                            id="product-name"
-                        >
-                            {listProducts.map((option, i) => {
-                                return <option key={i} value={`${option.id}@${option.name}`} name={option.name}>{option.name}</option>
-                            })}
-                        </select>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Product Description:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setDescription(e.target.value)} value={description} />
+                        </div>
                     </div>
-                </div>
-                <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Create Product Price</button>
-            </form>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Product Brand:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setBrand(e.target.value)} value={brand} />
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Shoe Sizes:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setSize(e.target.value)} value={size}/>
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Colors:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setColors(e.target.value)} value={colors}/>
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Categories:</label>
+                        <div>
+                            <input type="text" className="w-full border rounded-md p-2" onChange={(e) => setCategories(e.target.value)} value={categories}/>
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Image URL 1:</label>
+                        <div>
+                            <input id="img1" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg1(e.target.value)} value={img1}/>
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Image URL 2:</label>
+                        <div>
+                            <input id="img2" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg2(e.target.value)} value={img2} />
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Image URL 3:</label>
+                        <div>
+                            <input id="img3" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg3(e.target.value)} value={img3} />
+                        </div>
+                    </div>
+                    <div className='mb-3 row'>
+                        <label htmlFor="" className="col-form-label">Image URL 4:</label>
+                        <div>
+                            <input id="img4" type="text" className="w-full border rounded-md p-2" onChange={(e) => setImg4(e.target.value)} value={img4} />
+                        </div>
+                    </div>
+                    <button type="submit" onClick={() => putImagesTogether()} className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Create Product</button>
+                </form>
+            </div>
 
-            <h2 className="text-center text-2xl mt-5">Delete a Product</h2>
-            <form className="mx-auto w-1/2 border p-3" onSubmit={archiveProductHandler}>
-                <div className='mb-3 row'>
-                    <label htmlFor="" className="col-form-label">List of Products:</label>
-                    <div>
-                        <select className="w-full border rounded-md p-2" 
-                        onChange={(e) => {
-                            setPricedStripeProduct(e.target.value.split("@")[0])
-                            setPricedDBName(e.target.value.split("@")[1])
-                        }} 
-                        >
-                            {listOfPricedProducts.map((option, i) => {
-                                return <option key={i} value={`${option.id}@${option.name}`} name={option.name}>{option.name}</option>
-                            })}
-                        </select>
-                    </div>
+            <div className='w-1/2'>
+
+                <div>
+                    <h2 className="text-center text-2xl mt-5">Add a price</h2>
+                    <form className="mx-auto w-1/2 border p-3 mt-2" onSubmit={priceSubmitHandler}>
+                        <div className='mb-3 row'>
+                            <label htmlFor="" className="col-form-label">Price of Product:</label>
+                            <div>
+                                <input type="number" className="w-full border rounded-md p-2" 
+                                onChange={(e) => {
+                                    setStripePrice(e.target.value)
+                                    setMongoPrice(e.target.value / 100)
+                                }} 
+                                value={stripePrice}/>
+                            </div>
+                        </div>
+                        <div className='mb-3 row'>
+                            <label htmlFor="" className="col-form-label">Products:</label>
+                            <div>
+                                <select className="w-full border rounded-md p-2" onChange={(e) => {
+                                    setStripeProductId(e.target.value.split("@")[0])
+                                    setDbName(e.target.value.split("@")[1])
+                                }} 
+                                    id="product-name"
+                                >
+                                    {listProducts.map((option, i) => {
+                                        return <option key={i} value={`${option.id}@${option.name}`} name={option.name}>{option.name}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Create Product Price</button>
+                    </form>
                 </div>
-                <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Delete Product</button>
-            </form>
+                
+                <div>
+                    <h2 className="text-center text-2xl mt-5">Delete a Product</h2>
+                    <form className="mx-auto w-1/2 border p-3 mt-2" onSubmit={archiveProductHandler}>
+                        <div className='mb-3 row'>
+                            <label htmlFor="" className="col-form-label">List of Products:</label>
+                            <div>
+                                <select className="w-full border rounded-md p-2" 
+                                onChange={(e) => {
+                                    setPricedStripeProduct(e.target.value.split("@")[0])
+                                    setPricedDBName(e.target.value.split("@")[1])
+                                }} 
+                                >
+                                    {listOfPricedProducts.map((option, i) => {
+                                        return <option key={i} value={`${option.id}@${option.name}`} name={option.name}>{option.name}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" className="bg-dark-blue hover:bg-light-blue text-white rounded-md p-2">Delete Product</button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }
