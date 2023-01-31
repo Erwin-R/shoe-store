@@ -98,9 +98,9 @@ const OrderSummary = (props) => {
                     />
                     <div className="flex-auto space-y-1">
                       <h3 className="text-gray-900">
-                        <a href={product.href}>{product.name}</a>
+                        <a href={'/product/' + product.id}>{product.name}</a>
                       </h3>
-                      <p>{product.colors}</p>
+                      <p>{product.colors[0]}</p>
                       <p>Size: {product.size}</p>
                     </div>
                     <p className="flex-none font-medium text-gray-900">${product.price}</p>

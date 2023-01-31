@@ -67,6 +67,8 @@ function classNames(...classes) {
 const ProductPage = (props) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [item, setItem] = useState({});
+  const [sizes, setSizes] = useState([]);
+  const [shoeSize, setShoeSize] = useState('');
   const { id } = useParams();
   // const products = useContext(ShoeContext).itemsInCart;
   // const addProduct = useContext(ShoeContext).setItemsInCart;
@@ -79,7 +81,9 @@ const ProductPage = (props) => {
     axios.get('http://localhost:8000/api/shoe/' + id)
       .then(res => {
         console.log(res.data.imgUrls);
-        setItem({...res.data, quantity: 1});
+        setItem({...res.data, quantity: 1, size: res.data.size[0]});
+        setSizes([...res.data.size]);
+        setShoeSize(res.data.size[0]);
       })
       .catch(err => console.error(err));
   }, [id]);
@@ -91,7 +95,7 @@ const ProductPage = (props) => {
     if(currentProducts !== null){
       for(let i in currentProducts){
         console.log(currentProducts[i])
-        if(Object.values(currentProducts[i]).includes(item._id)){
+        if(Object.values(currentProducts[i]).includes(item._id) && Object.values(currentProducts[i]).includes(item.size)){
           currentProducts[i].quantity++;
           sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts]));
           sessionStorage.setItem('numInCart', numInCart + 1);
@@ -111,6 +115,11 @@ const ProductPage = (props) => {
       sessionStorage.numInCart = 1;
     }
     setNumInCart(sessionStorage.numInCart);
+  }
+
+  const sizeHandler = (e) => {
+    setShoeSize(e.target.id);
+    setItem({...item, size: e.target.id})
   }
 
   return (
@@ -240,8 +249,8 @@ const ProductPage = (props) => {
                 <h2>Size:</h2>
                 <Menu as="div" className="relative inline-block text-left">
                       <div>
-                          <Menu.Button className="group inline-flex justify-center text-md font-medium text-gray-700 hover:text-gray-900">
-                              {item.size[0]}
+                          <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                              {shoeSize}
                               <ChevronDownIcon
                                   className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"
                                   aria-hidden="true"
@@ -260,9 +269,9 @@ const ProductPage = (props) => {
                       >
                           <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                               <div className="py-1">
-                                {item.size?.map((size, sizeIdx) => (
+                                {sizes?.map((size, sizeIdx) => (
                                   <Menu.Item key={size + sizeIdx} id={size}>
-                                      <p onClick={(e) => console.log(e.target.id)} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>{size}</p>
+                                      <p onClick={(e) => sizeHandler(e)} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>{size}</p>
                                   </Menu.Item>
                                 ))}
                               </div>
