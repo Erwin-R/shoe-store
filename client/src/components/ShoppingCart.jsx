@@ -116,12 +116,12 @@ const ShoppingCart = (props) => {
                           </h3>
                         </div>
                         <div className="mt-1 flex text-sm">
-                          <p className="text-gray-500">{product.color}</p>
-                          {/* {product.size ? (
-                            <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">{product.size}</p>
-                          ) : null} */}
+                          <p className="text-gray-500">{product.colors[0]}</p>
+                          {product.size ? (
+                            <p className="ml-4 border-l border-gray-200 pl-4 text-gray-500">Size: {product.size}</p>
+                          ) : null}
                         </div>
-                        {/* <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p> */}
+                        <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p>
                       </div>
 
                       <div className="mt-4 sm:mt-0 sm:pr-9">
@@ -154,8 +154,8 @@ const ShoppingCart = (props) => {
                       </div>
                     </div>
 
-                    <p className="mt-4 flex space-x-2 text-sm font-medium text-gray-900">
-                        ${product.price}
+                    {/* <p className="mt-4 flex space-x-2 text-sm font-medium text-gray-900"> */}
+                        {/* ${product.price} */}
                       {/* {product.inStock ? (
                         <CheckIcon className="h-5 w-5 flex-shrink-0 text-green-500" aria-hidden="true" />
                       ) : (
@@ -163,7 +163,7 @@ const ShoppingCart = (props) => {
                       )}
 
                       <span>{product.inStock ? 'In stock' : `Ships in ${product.leadTime}`}</span> */}
-                    </p>
+                    {/* </p> */}
                   </div>
                 </li>
               ))}
