@@ -40,6 +40,8 @@ const Checkout = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const itemsInCart = useContext(ShoeContext).itemsInCart;
+  // const shippingInfo = useContext(ShoeContext).shippingInfo;
+  // const setShippingInfo = useContext(ShoeContext).setShippingInfo;
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
@@ -47,6 +49,10 @@ const Checkout = (props) => {
   const [subtotal, setSubtotal] = useState(0);
   const [taxes, setTaxes] = useState(0);
   const [total, setTotal] = useState(0);
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [residentState, setResidentState] = useState('');
+  const [zipCode, setZipCode] = useState('');
 
   const paymentElementOptions = { layout: 'tabs'};
 
@@ -95,6 +101,14 @@ const Checkout = (props) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    sessionStorage.setItem('shippingInfo', JSON.stringify({
+      email: email,
+      address: address,
+      city: city,
+      state: residentState,
+      zip: zipCode
+    }))
 
     if(!stripe || !elements){
       return;
@@ -289,6 +303,8 @@ const Checkout = (props) => {
                         name="address"
                         autoComplete="street-address"
                         className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-2.5"
+                        onChange={(e) => setAddress(e.target.value)}
+                        value={address}
                       />
                     </div>
                   </div>
@@ -305,6 +321,8 @@ const Checkout = (props) => {
                         name="city"
                         autoComplete="address-level2"
                         className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        onChange={(e) => setCity(e.target.value)}
+                        value={city}
                       />
                     </div>
                   </div>
@@ -321,6 +339,8 @@ const Checkout = (props) => {
                         name="region"
                         autoComplete="address-level1"
                         className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        onChange={(e) => setResidentState(e.target.value)}
+                        value={residentState}
                       />
                     </div>
                   </div>
@@ -337,6 +357,8 @@ const Checkout = (props) => {
                         name="postal-code"
                         autoComplete="postal-code"
                         className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        onChange={(e) => setZipCode(e.target.value)}
+                        value={zipCode}
                       />
                     </div>
                   </div>

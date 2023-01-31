@@ -20,6 +20,7 @@ import ViewProduct from './views/ViewProduct';
 function App() {
   const [itemsInCart, setItemsInCart] = useState([]);
   const [numInCart, setNumInCart] = useState(0);
+  const [shippingInfo, setShippingInfo] = useState({})
 
   useEffect(() => {
     const updateNumInCart = JSON.parse(sessionStorage.getItem('numInCart'));
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <div className="App">
-      <ShoeContext.Provider value={{itemsInCart, setItemsInCart, numInCart, setNumInCart}}>
+      <ShoeContext.Provider value={{itemsInCart, setItemsInCart, numInCart, setNumInCart, shippingInfo, setShippingInfo}}>
         <Routes>
           <Route element={ <Home /> } path="/" />
           <Route element={ <ViewProduct/> } path="/product" />
