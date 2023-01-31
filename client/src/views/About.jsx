@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminForm from '../components/AdminForm';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
@@ -7,7 +6,9 @@ const AdminPage = () => {
     return (
         <div>
             <NavBar />
-            <AdminForm/>
+            <main className='w-2/3 mx-auto p-5 h-screen'>
+                <h1 className="text-4xl font-bold tracking-tight text-dark-blue">About Us</h1>
+            </main>
             <Footer />
         </div>
     );
