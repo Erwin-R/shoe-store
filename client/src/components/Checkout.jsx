@@ -212,7 +212,7 @@ const Checkout = (props) => {
           <div className="border-b border-gray-200 py-6 text-left max-w-2xl mx-auto mb-6">
                 <Link to={"/cart"} className="text-sm font-medium text-dark-blue hover:text-light-blue">
                   <span aria-hidden="true"> &larr; </span>
-                  Continue Shopping
+                  Back to Cart
                 </Link>
           </div>
 

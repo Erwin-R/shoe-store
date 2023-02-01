@@ -457,9 +457,9 @@ const NavBar = (props) => {
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 ">
                   {userSession ? 
                   <>
-                    <button onClick={logoutHandler}>Sign Out</button>
+                    <button className="text-sm font-medium hover:text-green" onClick={logoutHandler}>Sign Out</button>
                     <span className="h-6 w-px bg-gray-200 " aria-hidden="true" />
-                    <p>Welcome {userSession}</p>
+                    <p className="text-sm font-medium">Welcome, {userSession}</p>
                   </>
                   :
                   <>
