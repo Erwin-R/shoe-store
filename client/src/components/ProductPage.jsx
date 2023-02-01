@@ -286,7 +286,7 @@ const ProductPage = (props) => {
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-dark-blue py-3 px-8 text-base font-medium text-white hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   onClick={(e) => addToCart(e)}
                 >
-                  Add to bag
+                  Add to cart
                 </button>
 
                 <button
