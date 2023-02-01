@@ -14,12 +14,16 @@ import CheckoutPage from './views/CheckoutPage';
 import { useState, useEffect } from 'react';
 import AdminPage from './views/AdminPage';
 import ViewProduct from './views/ViewProduct';
+import RegisterPage from './views/RegisterPage';
+import LoginPage from './views/LoginPage';
 
 
 
 function App() {
   const [itemsInCart, setItemsInCart] = useState([]);
   const [numInCart, setNumInCart] = useState(0);
+  const [logged, setLogged] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const updateNumInCart = JSON.parse(sessionStorage.getItem('numInCart'));
@@ -35,16 +39,18 @@ function App() {
         <Routes>
           <Route element={ <Home /> } path="/" />
           <Route element={ <ViewProduct/> } path="/product" />
-          <Route element={ <ViewProduct/> } path="/product/:id" />
+          <Route element={ <ViewProduct /> } path="/product/:id" />
           <Route element={ <TrendingProduct />} path="/trending" />
           <Route element={ <ProductList />} path="/products" />
           <Route element={ <SideBar />} path="/sidebar" />
-          <Route element={ <ShoppingCartPage />} path="/cart" />
+          <Route element={ <ShoppingCartPage  />} path="/cart" />
           <Route element={ <OrderSummary />} path="/summary" />
-          <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
-          <Route element={ <SlidingCart/> } path="/slide"/>
-          <Route element={ <CheckoutPage/> } path="/checkout"/>
-          <Route element={<AdminPage/>} path="/admin"/>
+          <Route element={ <ViewAllShoes /> } path="/shoe/view-all"/>
+          <Route element={ <SlidingCart /> } path="/slide"/>
+          <Route element={ <CheckoutPage /> } path="/checkout"/>
+          <Route element={<AdminPage />} path="/admin"/>
+          <Route element={<RegisterPage/>} path="/register"/>
+          <Route element={<LoginPage/>} path="/user/login"/>
         </Routes>
       </ShoeContext.Provider>
     </div>

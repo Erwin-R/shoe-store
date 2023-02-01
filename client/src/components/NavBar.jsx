@@ -23,6 +23,7 @@ import SlidingCart from './SlidingCart';
 import navbar from '../images/navbar.jpg';
 import navbar1 from '../images/navbar1.jpg';
 import navbar2 from '../images/navbar2.jpg';
+import axios from 'axios';
 
 
 const navigation = {
@@ -160,6 +161,8 @@ const NavBar = (props) => {
 
   const [loaded, setLoaded] = useState(false);
 
+  const [userSession, setUserSession] = useState("")
+
   // const itemsInCart = useContext(ShoeContext).itemsInCart;
   // const setItemsInCart = useContext(ShoeContext).setItemsInCart;
   const numInCart = useContext(ShoeContext).numInCart;
@@ -172,7 +175,24 @@ const NavBar = (props) => {
     // const numItems = JSON.parse(sessionStorage.getItem('itemsInCart'))
     // // numItems === null ?
     // setItemsInCart(numItems);
-  }, [])
+    if(sessionStorage.getItem("userInSession") === "null"){
+      setUserSession(JSON.parse(sessionStorage.getItem("userInSession")))
+    } else{
+      setUserSession(sessionStorage.getItem("userInSession"))
+    }
+
+  }, [userSession])
+
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    axios.get('http://localhost:8000/api/logout', { withCredentials: true })
+      .then(res => {
+        sessionStorage.setItem("userInSession", null);
+        setUserSession(JSON.parse(sessionStorage.getItem("userInSession")));
+        console.log(res)
+      })
+      .catch(err => console.error(err))
+  }
 
   return (
     <div className="bg-white">
@@ -450,13 +470,23 @@ const NavBar = (props) => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 ">
-                  <Link to="#" className="text-sm font-medium hover:text-green">
+                  {userSession ? 
+                  <>
+                    <button onClick={logoutHandler}>Sign Out</button>
+                    <span className="h-6 w-px bg-gray-200 " aria-hidden="true" />
+                    <p>Welcome {userSession}</p>
+                  </>
+                  :
+                  <>
+                  <Link to="/user/login" className="text-sm font-medium hover:text-green">
                     Sign in
                   </Link>
                   <span className="h-6 w-px bg-gray-200 " aria-hidden="true" />
-                  <Link to="#" className="text-sm font-medium hover:text-green ">
+                  <Link to="/register" className="text-sm font-medium hover:text-green ">
                     Create account
                   </Link>
+                  </>
+                  }
                 </div>
 
                 {/* currency icon below */}
