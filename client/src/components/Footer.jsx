@@ -1,9 +1,5 @@
 const navigation = {
-    main: [
-      { name: 'About', href: '/about' },
-    //   { name: 'Blog', href: '#' },
-    //   { name: 'Jobs', href: '#' }
-    ],
+    
     social: [
       {
         name: 'Facebook',
@@ -59,20 +55,18 @@ const navigation = {
   const Footer = (props) => {
     return (
       <footer className="bg-gradient-to-r from-dark-blue via-light-blue to-green">
-        <div className="mx-auto max-w-7xl overflow-hidden py-10 px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto max-w-7xl overflow-hidden py-10 px-6 sm:py-12 lg:px-8 flex flex-col">
           <h2 className="text-center text-white font-fugaz text-2xl pb-9">PAIRED UP</h2>
-          <nav className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
-            {navigation.main.map((item) => (
-              <div key={item.name} className="pb-6">
-                <a href={item.href} className="text-sm leading-6 text-white hover:text-gray-500">
-                  {item.name}
+          <nav className="-mb-6 columns-2 flex justify-center sm:space-x-12 text-center" aria-label="Footer">
+              <div className="pb-6">
+                <a href='/about'className="text-sm text-center leading-6 text-white hover:text-dark-blue">
+                  About
                 </a>
               </div>
-            ))}
           </nav>
           <div className="mt-10 flex justify-center space-x-10">
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} className="text-white hover:text-gray-500">
+              <a key={item.name} href={item.href} className="text-white hover:text-dark-blue">
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />
               </a>

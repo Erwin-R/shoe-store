@@ -51,15 +51,14 @@ const navigation = {
           id: 'shoes',
           name: 'Shoes',
           items: [
-            { name: 'Adidas', href: '/shoe/view-all' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'All Shoes', href: '/shoe/view-all' },
+            { name: 'Sneakers', href: '#' },
+            { name: 'Originals', href: '#' },
+            { name: 'Running', href: '#' },
+            { name: 'Basketball', href: '#' },
+            { name: 'Training', href: '#' },
+            { name: 'Outdoor & Hiking', href: '#' },
+            { name: 'Sandals', href: '#' },
           ],
         },
         // {
@@ -78,11 +77,11 @@ const navigation = {
           id: 'brands',
           name: 'Brands',
           items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
+            { name: 'Adidas', href: '#' },
+            { name: 'Converse', href: '#' },
+            { name: 'Fila', href: '#' },
+            { name: 'Nike', href: '#' },
+            { name: 'Puma', href: '#' },
           ],
         },
       ],
@@ -143,10 +142,6 @@ const navigation = {
     //     },
     //   ],
     // },
-  ],
-  pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
   ],
 }
 
@@ -277,16 +272,6 @@ const NavBar = (props) => {
                 </Tab.Group>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
-                        {page.name}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   <div className="flow-root">
                     <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
                       Sign in
@@ -320,7 +305,7 @@ const NavBar = (props) => {
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-gradient-to-r from-green via-light-blue to-dark-blue px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          FREE STANDARD SHIPPING AND RETURNS
+          FREE EXCHANGES AND RETURNS
         </p>
 
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

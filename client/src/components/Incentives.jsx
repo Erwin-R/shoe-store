@@ -3,8 +3,8 @@ import { ChatBubbleLeftRightIcon, GiftTopIcon, GlobeAltIcon, ShoppingCartIcon,  
 
 const incentives = [
   {
-    name: 'Free Shipping',
-    description: "Fast, easy, and free worldwide shipping on all orders and returns. No matter what.",
+    name: 'Free Exchanges & Returns',
+    description: "Fast, easy, and free worldwide shipping on all exchanges and returns. No matter what.",
     icon: <GlobeAltIcon />,
   },
   {

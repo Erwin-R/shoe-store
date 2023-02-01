@@ -22,7 +22,7 @@ const Home = () => {
 
     const carousel = [
         { img: wide1, alt: '' },
-        { img: wide2, alt: '' },
+        // { img: wide2, alt: '' },
         { img: wide3, alt: '' },
         { img: wide4, alt: '' },
         { img: wide5, alt: '' },

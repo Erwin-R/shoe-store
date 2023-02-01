@@ -5,11 +5,11 @@ import Footer from "../components/Footer";
 
 const ShoppingCartPage = (props) => {
   return(
-    <>
+    <div>
       <NavBar /> 
       <ShoppingCart />
       <Footer />
-    </>
+    </div>
   );
 }
 
