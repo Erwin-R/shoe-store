@@ -68,9 +68,9 @@ const TrendingProduct = (props) => {
                   className="h-full w-full object-cover object-center"
                 />
               </div>
-              <h3 className="mt-4 text-sm text-gray-700">
+              <h3 className="mt-4 text-sm font-medium text-gray-700">
                 <a href='/'>
-                  <span className="absolute inset-0" />
+                  <span className="absolute inset-0 " />
                   {product.name}
                 </a>
               </h3>

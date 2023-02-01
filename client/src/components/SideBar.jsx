@@ -243,47 +243,92 @@ const SideBar = (props) => {
                                         </ul>
 
                                         {colors.map((section) => (
-                                            <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
-                                                {({ open }) => (
-                                                    <>
-                                                        <h3 className="-mx-2 -my-3 flow-root">
-                                                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                                                <span className="font-medium text-gray-900">{section.name}</span>
-                                                                <span className="ml-6 flex items-center">
-                                                                    {open ? (
-                                                                        <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                                                                    ) : (
-                                                                        <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                                                                    )}
-                                                                </span>
-                                                            </Disclosure.Button>
-                                                        </h3>
-                                                        <Disclosure.Panel className="pt-6">
-                                                            <div className="space-y-6">
-                                                                {section.options.map((option, optionIdx) => (
-                                                                    <div key={option.value} className="flex items-center">
-                                                                        <input
-                                                                            id={`filter-mobile-${section.id}-${optionIdx}`}
-                                                                            name={`${section.id}[]`}
-                                                                            defaultValue={option.value}
-                                                                            type="checkbox"
-                                                                            defaultChecked={option.checked}
-                                                                            className="h-4 w-4 rounded border-gray-300 text-dark-blue focus:ring-green"
-                                                                        />
-                                                                        <label
-                                                                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                                                            className="ml-3 min-w-0 flex-1 text-gray-500"
-                                                                        >
-                                                                            {option.label}
-                                                                        </label>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </Disclosure.Panel>
-                                                    </>
-                                                )}
-                                            </Disclosure>
-                                        ))}
+                                        <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                                            {({ open }) => (
+                                                <>
+                                                    <h3 className="-mx-2 -my-3 flow-root">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                                            <span className="font-medium text-gray-900">{section.name}</span>
+                                                            <span className="ml-6 flex items-center">
+                                                                {open ? (
+                                                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                ) : (
+                                                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                )}
+                                                            </span>
+                                                        </Disclosure.Button>
+                                                    </h3>
+                                                    <Disclosure.Panel className="pt-6">
+                                                        <div className="space-y-4">
+                                                            {section.options.map((option, optionIdx) => (
+                                                                <div key={option.value} className="flex items-center">
+                                                                    <input
+                                                                        id={`filter-${section.id}-${optionIdx}`}
+                                                                        name={`${section.id}[]`}
+                                                                        defaultValue={option.value}
+                                                                        type="checkbox"
+                                                                        defaultChecked={option.checked}
+                                                                        className="h-4 w-4 rounded border-gray-300 text-dark-blue focus:ring-green"
+                                                                        onClick={(e) => handleColor(e, optionIdx)}
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                        className="ml-3 min-w-0 flex-1 text-gray-500"
+                                                                    >
+                                                                        {option.label}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </Disclosure.Panel>
+                                                </>
+                                            )}
+                                        </Disclosure>
+                                    ))}
+
+                                    {categories.map((section) => (
+                                        <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                                            {({ open }) => (
+                                                <>
+                                                    <h3 className="-mx-2 -my-3 flow-root">
+                                                        <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                                            <span className="font-medium text-gray-900">{section.name}</span>
+                                                            <span className="ml-6 flex items-center">
+                                                                {open ? (
+                                                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                ) : (
+                                                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                                )}
+                                                            </span>
+                                                        </Disclosure.Button>
+                                                    </h3>
+                                                    <Disclosure.Panel className="pt-6">
+                                                        <div className="space-y-4">
+                                                            {section.options.map((option, optionIdx) => (
+                                                                <div key={option.value} className="flex items-center">
+                                                                    <input
+                                                                        id={`filter-${section.id}-${optionIdx}`}
+                                                                        name={`${section.id}[]`}
+                                                                        defaultValue={option.value}
+                                                                        type="checkbox"
+                                                                        defaultChecked={option.checked}
+                                                                        className="h-4 w-4 rounded border-gray-300 text-dark-blue focus:ring-green"
+                                                                        onClick={(e) => handleColor(e, optionIdx)}
+                                                                    />
+                                                                    <label
+                                                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                                                        className="ml-3 min-w-0 flex-1 text-gray-500"
+                                                                    >
+                                                                        {option.label}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </Disclosure.Panel>
+                                                </>
+                                            )}
+                                        </Disclosure>
+                                    ))}
                                     </form>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -318,18 +363,6 @@ const SideBar = (props) => {
                                 >
                                     <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="py-1">
-                                            {/* {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
-                          {({ active }) => (
-                            <p
-                              onClick={option.sort}
-                              className={classNames(option.current ? 'font-medium text-gray-900' : 'text-gray-500',active ? 'bg-gray-100' : '','block px-4 py-2 text-sm')}
-                            >
-                              {option.name}
-                            </p>
-                          )}
-                        </Menu.Item>
-                      ))} */}
                                             <Menu.Item>
                                                 <p onClick={() => handleName(allShoes)} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>Alphabetically A-Z</p>
                                             </Menu.Item>
@@ -344,10 +377,6 @@ const SideBar = (props) => {
                                 </Transition>
                             </Menu>
 
-                            {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button> */}
                             <button
                                 type="button"
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"

@@ -21,6 +21,7 @@ import {
   useElements 
 } from "@stripe/react-stripe-js";
 import '../App.css';
+import { Link } from 'react-router-dom'
 
 const products = [
   {
@@ -208,6 +209,13 @@ const Checkout = (props) => {
             Payment and shipping details
           </h2>
 
+          <div className="border-b border-gray-200 py-6 text-left max-w-2xl mx-auto mb-6">
+                <Link to={"/cart"} className="text-sm font-medium text-dark-blue hover:text-light-blue">
+                  <span aria-hidden="true"> &larr; </span>
+                  Continue Shopping
+                </Link>
+          </div>
+
           <form onSubmit={onSubmitHandler}>
             <div className="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
               <div>
@@ -287,7 +295,7 @@ const Checkout = (props) => {
                 </div>
               </div> */}
 
-<div className="mt-10">
+            <div className="mt-10">
                 <h3 className="text-lg font-medium text-gray-900">Shipping address</h3>
 
                 <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">

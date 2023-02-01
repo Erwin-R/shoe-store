@@ -96,11 +96,11 @@ const SlidingCart = (props) => {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-lg font-medium text-gray-900">Shopping cart</Dialog.Title>
+                        <Dialog.Title className="text-lg font-medium text-gray-900">Shopping Cart</Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
+                            className="-m-2 p-2 text-gray-400 hover:text-green"
                             onClick={() => {
                                 setOpen(!open)
                                 openCart(false)
@@ -137,7 +137,7 @@ const SlidingCart = (props) => {
                                     <p className="mt-1 text-sm text-gray-500">Size: {product.size}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
+                                    <p className="text-gray-500">Qty: {product.quantity}</p>
 
                                     <div className="flex">
                                       <button
