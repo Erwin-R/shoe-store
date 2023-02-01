@@ -133,7 +133,8 @@ const SlidingCart = (props) => {
                                       </h3>
                                       <p className="ml-4">${product.price}</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                    <p className="mt-1 text-sm text-gray-500">{product.colors[0]}</p>
+                                    <p className="mt-1 text-sm text-gray-500">Size: {product.size}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">Qty {product.quantity}</p>

@@ -1,4 +1,6 @@
+import {useState, useEffect, useContext } from 'react';
 import {Link} from 'react-router-dom';
+import ShoeContext from '../context/ShoeContext';
 import summary from '../images/summary3.jpg';
 
 const products = [
@@ -16,6 +18,39 @@ const products = [
 ]
 
 const OrderSummary = (props) => {
+  const [itemsInOrder, setItemsInOrder] = useState([]);
+  const [taxes, setTaxes] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [shippingInfo, setShippingInfo] = useState({})
+
+  const itemsInCart = useContext(ShoeContext).itemsInCart;
+  const setItemsInCart = useContext(ShoeContext).setItemsInCart;
+  const setNumInCart = useContext(ShoeContext).setNumInCart;
+  const sessionShippingInfo = JSON.parse(sessionStorage.getItem('shippingInfo'))
+  const sessionItemsInCart = JSON.parse(sessionStorage.getItem('itemsInCart'))
+
+  useEffect(() => {
+    orderTotal(sessionItemsInCart);
+    setItemsInOrder([...sessionItemsInCart])
+    setShippingInfo({...sessionShippingInfo})
+    sessionStorage.clear();
+  }, [])
+
+  const orderTotal = (products) => {
+    let sum = 0;
+    for(let item in products){
+      sum += products[item].price * products[item].quantity;
+    }
+    setSubtotal(sum.toFixed(2));
+
+    const taxEstimate = sum * 0.05;
+    setTaxes(taxEstimate.toFixed(2));
+
+    const tempTotal = sum + taxEstimate + 5
+    setTotal(tempTotal.toFixed(2));
+  }
+
   return (
     <>
       {/*
@@ -54,21 +89,21 @@ const OrderSummary = (props) => {
                 role="list"
                 className="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
               >
-                {products.map((product) => (
-                  <li key={product.id} className="flex space-x-6 py-6">
+                {itemsInOrder.map((product, idx) => (
+                  <li key={product.id + idx} className="flex space-x-6 py-6">
                     <img
-                      src={product.imageSrc}
+                      src={product.imgUrls[0]}
                       alt={product.imageAlt}
                       className="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
                     />
                     <div className="flex-auto space-y-1">
                       <h3 className="text-gray-900">
-                        <a href={product.href}>{product.name}</a>
+                        <a href={'/product/' + product.id}>{product.name}</a>
                       </h3>
-                      <p>{product.color}</p>
-                      <p>{product.size}</p>
+                      <p>{product.colors[0]}</p>
+                      <p>Size: {product.size}</p>
                     </div>
-                    <p className="flex-none font-medium text-gray-900">{product.price}</p>
+                    <p className="flex-none font-medium text-gray-900">${product.price}</p>
                   </li>
                 ))}
               </ul>
@@ -76,22 +111,22 @@ const OrderSummary = (props) => {
               <dl className="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
                 <div className="flex justify-between">
                   <dt>Subtotal</dt>
-                  <dd className="text-gray-900">$72.00</dd>
+                  <dd className="text-gray-900">${subtotal}</dd>
                 </div>
 
                 <div className="flex justify-between">
                   <dt>Shipping</dt>
-                  <dd className="text-gray-900">$8.00</dd>
+                  <dd className="text-gray-900">$5.00</dd>
                 </div>
 
                 <div className="flex justify-between">
                   <dt>Taxes</dt>
-                  <dd className="text-gray-900">$6.40</dd>
+                  <dd className="text-gray-900">${taxes}</dd>
                 </div>
 
                 <div className="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
                   <dt className="text-base">Total</dt>
-                  <dd className="text-base">$86.40</dd>
+                  <dd className="text-base">${total}</dd>
                 </div>
               </dl>
 
@@ -100,9 +135,9 @@ const OrderSummary = (props) => {
                   <dt className="font-medium text-gray-900">Shipping Address</dt>
                   <dd className="mt-2">
                     <address className="not-italic">
-                      <span className="block">Kristin Watson</span>
-                      <span className="block">7363 Cynthia Pass</span>
-                      <span className="block">Toronto, ON N3Y 4H8</span>
+                      <span className="block">{shippingInfo.email}</span>
+                      <span className="block">{shippingInfo.address}</span>
+                      <span className="block">{`${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zip}`}</span>
                     </address>
                   </dd>
                 </div>

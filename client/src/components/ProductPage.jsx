@@ -13,10 +13,10 @@
   }
   ```
 */
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, Fragment } from 'react'
 import axios from 'axios'
-import { Disclosure, RadioGroup, Tab } from '@headlessui/react'
-import { StarIcon } from '@heroicons/react/20/solid'
+import { Disclosure, RadioGroup, Tab, Menu, Transition } from '@headlessui/react'
+import { StarIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import { HeartIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { useParams } from 'react-router-dom'
 import ShoeContext from '../context/ShoeContext'
@@ -38,6 +38,7 @@ const product = {
     { name: 'Washed Black', bgColor: 'bg-gray-700', selectedColor: 'ring-gray-700' },
     { name: 'White', bgColor: 'bg-white', selectedColor: 'ring-gray-400' },
     { name: 'Washed Gray', bgColor: 'bg-gray-500', selectedColor: 'ring-gray-500' },
+    { name: 'Washed Gray', bgColor: 'bg-gray-500', selectedColor: 'ring-gray-500', size: '6'},
   ],
   description: `
     <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
@@ -66,6 +67,8 @@ function classNames(...classes) {
 const ProductPage = (props) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [item, setItem] = useState({});
+  const [sizes, setSizes] = useState([]);
+  const [shoeSize, setShoeSize] = useState('');
   const { id } = useParams();
   // const products = useContext(ShoeContext).itemsInCart;
   // const addProduct = useContext(ShoeContext).setItemsInCart;
@@ -78,7 +81,9 @@ const ProductPage = (props) => {
     axios.get('http://localhost:8000/api/shoe/' + id)
       .then(res => {
         console.log(res.data.imgUrls);
-        setItem({...res.data, quantity: 1});
+        setItem({...res.data, quantity: 1, size: res.data.size[0]});
+        setSizes([...res.data.size]);
+        setShoeSize(res.data.size[0]);
       })
       .catch(err => console.error(err));
   }, [id]);
@@ -90,7 +95,7 @@ const ProductPage = (props) => {
     if(currentProducts !== null){
       for(let i in currentProducts){
         console.log(currentProducts[i])
-        if(Object.values(currentProducts[i]).includes(item._id)){
+        if(Object.values(currentProducts[i]).includes(item._id) && Object.values(currentProducts[i]).includes(item.size)){
           currentProducts[i].quantity++;
           sessionStorage.setItem('itemsInCart', JSON.stringify([...currentProducts]));
           sessionStorage.setItem('numInCart', numInCart + 1);
@@ -110,6 +115,11 @@ const ProductPage = (props) => {
       sessionStorage.numInCart = 1;
     }
     setNumInCart(sessionStorage.numInCart);
+  }
+
+  const sizeHandler = (e) => {
+    setShoeSize(e.target.id);
+    setItem({...item, size: e.target.id})
   }
 
   return (
@@ -235,6 +245,40 @@ const ProductPage = (props) => {
                   </span>
                 </RadioGroup>
               </div> */}
+              <div className='flex items-center gap-3'>
+                <h2>Size:</h2>
+                <Menu as="div" className="relative inline-block text-left">
+                      <div>
+                          <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                              {shoeSize}
+                              <ChevronDownIcon
+                                  className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"
+                                  aria-hidden="true"
+                              />
+                          </Menu.Button>
+                      </div>
+
+                      <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                      >
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <div className="py-1">
+                                {sizes?.map((size, sizeIdx) => (
+                                  <Menu.Item key={size + sizeIdx} id={size}>
+                                      <p onClick={(e) => sizeHandler(e)} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>{size}</p>
+                                  </Menu.Item>
+                                ))}
+                              </div>
+                          </Menu.Items>
+                      </Transition>
+                  </Menu>
+              </div>
 
               <div className="sm:flex-col1 mt-10 flex">
                 <button
