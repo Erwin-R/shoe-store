@@ -46,24 +46,18 @@ function App() {
       <ShoeContext.Provider value={{itemsInCart, setItemsInCart, numInCart, setNumInCart, shippingInfo, setShippingInfo}}>
         <Routes>
           <Route element={ <Home /> } path="/" />
-          <Route element={ <ViewProduct/> } path="/product" />
           <Route element={ <ViewProduct /> } path="/product/:id" />
-          <Route element={ <TrendingProduct />} path="/trending" />
           <Route element={ <ProductList />} path="/products" />
           <Route element={ <SideBar />} path="/sidebar" />
-          <Route element={ <ShoppingCartPage  />} path="/cart" />
+          <Route element={ <ShoppingCartPage /> } path="/cart" />
           <Route element={ <OrderSummary />} path="/summary" />
-
-
-          <Route element={<RegisterPage/>} path="/register"/>
-          <Route element={<LoginPage/>} path="/user/login"/>
-
+          <Route element={ <RegisterPage/> } path="/register"/>
+          <Route element={ <LoginPage/> } path="/user/login"/>
           <Route element={ <ViewAllShoes/> } path="/shoe/view-all"/>
           <Route element={ <SlidingCart/> } path="/slide"/>
           <Route element={ <CheckoutPage/> } path="/checkout"/>
           <Route element={ <AdminPage/> } path="/admin"/>
           <Route element={ <About /> } path="/about" />
-
         </Routes>
       </ShoeContext.Provider>
     </div>

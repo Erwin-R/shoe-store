@@ -246,10 +246,10 @@ const ProductPage = (props) => {
                 </RadioGroup>
               </div> */}
               <div className='flex items-center gap-3'>
-                <h2>Size:</h2>
+                <h2 className='font-medium'>Size:</h2>
                 <Menu as="div" className="relative inline-block text-left">
                       <div>
-                          <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                          <Menu.Button className="group inline-flex justify-center items-center text-md font-medium text-gray-700 hover:text-gray-900">
                               {shoeSize}
                               <ChevronDownIcon
                                   className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"
@@ -286,16 +286,16 @@ const ProductPage = (props) => {
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-dark-blue py-3 px-8 text-base font-medium text-white hover:bg-light-blue focus:outline-none focus:ring-2 focus:ring-green focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                   onClick={(e) => addToCart(e)}
                 >
-                  Add to bag
+                  Add to cart
                 </button>
 
-                <button
+                {/* <button
                   type="button"
                   className="ml-4 flex items-center justify-center rounded-md py-3 px-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 >
                   <HeartIcon className="h-6 w-6 flex-shrink-0 text-light-blue" aria-hidden="true" />
                   <span className="sr-only">Add to favorites</span>
-                </button>
+                </button> */}
               </div>
             </form>
 
