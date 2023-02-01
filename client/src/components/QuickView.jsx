@@ -234,10 +234,10 @@ const QuickView = (props) => {
 
                           {/* Size picker */}
                           <div className='flex items-center gap-3'>
-                            <h2>Size:</h2>
+                            <h2 className='font-medium'>Size:</h2>
                             <Menu as="div" className="relative inline-block text-left">
                                   <div>
-                                      <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                      <Menu.Button className="group inline-flex justify-center text-md items-center font-medium text-gray-700 hover:text-gray-900">
                                           {shoeSize}
                                           <ChevronDownIcon
                                               className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"

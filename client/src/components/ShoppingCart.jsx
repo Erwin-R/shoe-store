@@ -16,10 +16,12 @@
 // https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg
 // https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
-import { useEffect, useState, useContext } from 'react';
+import { Fragment, useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import ShoeContext from '../context/ShoeContext';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { Dialog, RadioGroup, Transition, Menu } from '@headlessui/react'
+import { StarIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const ShoppingCart = (props) => {
   const [subtotal, setSubtotal] = useState(0);
@@ -31,16 +33,20 @@ const ShoppingCart = (props) => {
   const itemsInCart = useContext(ShoeContext).itemsInCart;
   const setItemsInCart = useContext(ShoeContext).setItemsInCart;
   const [animate] = useAutoAnimate();
+  const [shoeQuantity, setShoeQuantity] = useState('');
+
+  const quantity = [1,2,3,4,5,6,7,8]
 
   useEffect(() => {
-    updateCartTotal();
+    const cart = JSON.parse(sessionStorage.getItem('itemsInCart'))
+    updateCartTotal(cart);
     console.log(products);
   }, [])
 
-  const updateCartTotal = () => {
+  const updateCartTotal = (arr) => {
     let sum = 0;
-    for(let item in products){
-      sum += products[item].price * products[item].quantity;
+    for(let item in arr){
+      sum += arr[item].price * arr[item].quantity;
     }
     setSubtotal(sum.toFixed(2));
 
@@ -53,7 +59,7 @@ const ShoppingCart = (props) => {
 
   const onChangeCartSelect = (e, idx) => {
     const oldQuantity = products[idx].quantity;
-    const newQuantity = e.target.value;
+    const newQuantity = e.target.id;
     products[idx].quantity = newQuantity;
 
     sessionStorage.setItem('itemsInCart', JSON.stringify([...products]));
@@ -64,7 +70,7 @@ const ShoppingCart = (props) => {
       sessionStorage.setItem('numInCart', numInCart - (oldQuantity - newQuantity));
       setNumInCart(numInCart - (oldQuantity - newQuantity));
     }
-    updateCartTotal();
+    updateCartTotal(itemsInCart);
     console.log(products)
   }
 
@@ -76,7 +82,7 @@ const ShoppingCart = (props) => {
     sessionStorage.setItem('itemsInCart', JSON.stringify([...itemsInCart]));
     sessionStorage.setItem('numInCart', numInCart - quantity);
     setNumInCart(numInCart - quantity);
-    updateCartTotal();
+    updateCartTotal(itemsInCart);
   }
 
   const onSubmitHandler = (e) => {
@@ -128,7 +134,7 @@ const ShoppingCart = (props) => {
                         <label htmlFor={`quantity-${productIdx}`} className="sr-only">
                           Quantity, {product.name}
                         </label>
-                        <select
+                        {/* <select
                           id={`quantity-${productIdx}`}
                           name={`quantity-${productIdx}`}
                           defaultValue={product.quantity}
@@ -143,7 +149,39 @@ const ShoppingCart = (props) => {
                           <option value={6}>6</option>
                           <option value={7}>7</option>
                           <option value={8}>8</option>
-                        </select>
+                        </select> */}
+
+                        <Menu as="div" className="relative inline-block text-left">
+                                  <div>
+                                      <Menu.Button className="group inline-flex justify-center text-md items-center font-medium text-gray-700 hover:text-gray-900">
+                                          {product.quantity}
+                                          <ChevronDownIcon
+                                              className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-green"
+                                              aria-hidden="true"
+                                          />
+                                      </Menu.Button>
+                                  </div>
+
+                                  <Transition
+                                      as={Fragment}
+                                      enter="transition ease-out duration-100"
+                                      enterFrom="transform opacity-0 scale-95"
+                                      enterTo="transform opacity-100 scale-100"
+                                      leave="transition ease-in duration-75"
+                                      leaveFrom="transform opacity-100 scale-100"
+                                      leaveTo="transform opacity-0 scale-95"
+                                  >
+                                      <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                          <div className="py-1">
+                                            {quantity?.map((quantity, quantityIdx) => (
+                                              <Menu.Item key={quantity + quantityIdx} id={quantity}>
+                                                  <p onClick={(e) => onChangeCartSelect(e, productIdx)} className='block px-4 py-2 text-sm cursor-pointer hover:bg-light-blue hover:text-white'>{quantity}</p>
+                                              </Menu.Item>
+                                            ))}
+                                          </div>
+                                      </Menu.Items>
+                                  </Transition>
+                              </Menu>
 
                         <div className="absolute top-0 right-0">
                           <button type="button" onClick={(e) => removeFromCart(e, productIdx)} className="-m-2 inline-flex p-2 text-gray-400 hover:text-gray-500">

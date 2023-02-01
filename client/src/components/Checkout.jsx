@@ -45,6 +45,8 @@ const Checkout = (props) => {
   // const setShippingInfo = useContext(ShoeContext).setShippingInfo;
 
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [subtotal, setSubtotal] = useState(0);
@@ -298,6 +300,40 @@ const Checkout = (props) => {
             <div className="mt-10">
                 <h3 className="text-lg font-medium text-gray-900">Shipping address</h3>
 
+                <div>
+                    <label htmlFor="firstName" className="block text-md text-md text-gray-700 font-normal mt-6">
+                      First Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        style={{border: '1px solid #e6e6e6'}}
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        onChange={(e) => setFirstName(e.target.value)}
+                        value={firstName}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="lastName" className="mt-6 block text-md text-md text-gray-700 font-normal">
+                      Last Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        style={{border: '1px solid #e6e6e6'}}
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        className="block w-full rounded-md shadow-sm outline-light-blue/50 outline-offset-2 focus:border-green focus:ring-green sm:text-md p-3"
+                        onChange={(e) => setLastName(e.target.value)}
+                        value={lastName}
+                      />
+                    </div>
+                  </div>
+                
                 <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">
                   <div className="sm:col-span-3">
                     <label htmlFor="address" className="block text-md text-md text-gray-700 font-normal">
