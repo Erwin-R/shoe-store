@@ -106,6 +106,8 @@ const Checkout = (props) => {
     e.preventDefault();
 
     sessionStorage.setItem('shippingInfo', JSON.stringify({
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       address: address,
       city: city,
