@@ -40,7 +40,7 @@ const TrendingProduct = (props) => {
             const hoverArr = [];
             const allShoes = res.data.shoes;
             const filteredShoes = [];
-            for(let i = 0; i < 4; i++) {
+            for(let i = 0; i < res.data.shoes.length; i++) {
                 if(allShoes[i].categories.includes("Featured")){
                     filteredShoes.push(allShoes[i])
                     hoverArr.push(false);
