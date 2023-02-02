@@ -134,7 +134,7 @@ const OrderSummary = (props) => {
                   <dt className="font-medium text-gray-900">Shipping Address</dt>
                   <dd className="mt-2">
                     <address className="not-italic">
-                      <span className="block">{shippingInfo.email}</span>
+                      <span className="block">{`${shippingInfo.firstName} ${shippingInfo.lastName}`}</span>
                       <span className="block">{shippingInfo.address}</span>
                       <span className="block">{`${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zip}`}</span>
                     </address>
@@ -162,7 +162,7 @@ const OrderSummary = (props) => {
                     </div>
                     <div className="flex-auto">
                       <p className="text-gray-900">Ending with 4242</p>
-                      <p>Expires 12 / 21</p>
+                      <p>Expires 12 / 23</p>
                     </div>
                   </dd>
                 </div>
